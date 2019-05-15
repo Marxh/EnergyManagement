@@ -21,5 +21,6 @@ GROUP BY LineDetection_facility.id ) as T2
 left join (select * from LineDetection_anomaly where month(LineDetection_anomaly.anomaly_date)=3 and day(LineDetection_anomaly.anomaly_date) = 8) as T3
 on T3.facility_id = T2.id
 
+
 update LineDetection_anomaly set anomaly_date = ADDDATE(anomaly_date, -62) where year(anomaly_date) = 2019
 */
