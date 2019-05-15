@@ -5,9 +5,11 @@ def to_dataframe(queryset):
     df = queryset.to_dataframe()
     return df
 
-'''
-def to_queryset(df):
-    return_qs = Facility.objects.none()
-    for col in df.columns:
-        pass
-'''
+def get_compare_date(df):
+    return str(df['date'].year)+'-'+str(df['date'].month)
+
+def get_type_num(df, flag_num):
+    if(str(df['anomaly_type']) == flag_num):
+        return 1
+    else:
+        return 0

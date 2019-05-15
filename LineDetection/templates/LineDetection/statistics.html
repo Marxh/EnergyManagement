@@ -226,18 +226,18 @@
                         </div>
 
                         <div class="xyxgpj_rightbottom">
-                            <p class="yxpjxg_one">异常能耗数据</p>
+                            <p class="yxpjxg_one">生产数据</p>
                             <div class="yxpjxg_two">
-                                <p>生产车辆数：</p>
+                                <p>已完成：{{ done_amount }} 辆车</p>
                             </div>
                             <div class="yxpjxg_three">
-                                <p>异常总数：</p>
+                                <p>剩余：{{ left_amount }} 辆车</p>
                             </div>
                             <p class="yxpjxg_four">能耗数据：</p>
                             <div class="yxpjxg_five">
-                                <span>01夏季熔炉房控温策略</span><br>
-                                <span>调节开始时间：11：00</span><br>
-                                <span>调节结束时间:18：00</span>
+                                
+                                <span>已过去生产天数：{{ passed_time }}天</span><br>
+                                <span>本生产周期天数：{{ total_time }}天</span>
                             </div>
                         </div>
                     </div>
@@ -278,6 +278,11 @@
 <script type="text/javascript">
     /* 第一个图 */
     var myChart1 = echarts.init(document.getElementById('echarts_xyxgpj_one'));
+    var json_data = {{ prod|safe }};
+    var total_goal = json_data['0'].total;
+    var done_amount = json_data['0'].done;
+    var percentage_amount = (done_amount/total_goal);
+    percentage_amount = String(percentage_amount.toFixed(2) * 100) + '%';
     option1 = {
         title: {
             text: '计划完成',
@@ -314,8 +319,8 @@
                 }
             },
             data: [
-                {value: 67, name: '67%'},
-                {value: 33, name: ''},],
+                {value: done_amount, name: percentage_amount},
+                {value: total_goal, name: ''},],
             color: ['#55c45f', '#ff6b6b']
         }]
     };
@@ -323,6 +328,11 @@
 
     /* 第二个图 */
     var myChart2 = echarts.init(document.getElementById('echarts_xyxgpj_two'));
+    var json_data = {{ time|safe }};
+    var total_time = json_data['0'].total;
+    var passed_time = json_data['0'].passed;
+    var percentage_time = (passed_time/total_time);
+    percentage_time = String(percentage_time.toFixed(2) * 100) + '%';
     option2 = {
         title: {
             text: '时间剩余情况',
@@ -359,14 +369,20 @@
                 }
             },
             data: [
-                {value: 79, name: '79%'},
-                {value: 21, name: ''},],
+                {value: passed_time, name: percentage_time},
+                {value: total_time, name: ''},],
             color: ['#55c45f', '#ff6b6b']
         }]
     };
     myChart2.setOption(option2);
 
     var myChart3 = echarts.init(document.getElementById('echarts_xyxgpj_three'));
+    var json_data = {{ anomaly_bar|safe }};
+    var compare_date = json_data['0'].compare_date;
+    var data_1 = json_data['0'].data_1;
+    var data_2 = json_data['0'].data_2;
+    var data_3 = json_data['0'].data_3;
+    var data_4 = json_data['0'].data_4;
     var option3 = {
         backgroundColor:'#21242e',
             tooltip: {
@@ -383,7 +399,7 @@
             containLabel: true
             },
             legend: {
-            data: ['1', '2', '3'],
+            data: ['1', '2', '3', '4'],
             right: 10,
             top:12,
             textStyle: {
@@ -395,7 +411,7 @@
         },
             xAxis: {
             type: 'category',
-            data: ['2012','2013','2014','2015','2016','2017','2018','2019'],
+            data: compare_date,
             axisLine: {
                 lineStyle: {
                 color: 'white'
@@ -413,7 +429,7 @@
 
             yAxis: {
             type: 'value',
-            max:'1200',
+            max:'5',
             axisLine: {
                 show: false,
                 lineStyle: {
@@ -469,7 +485,7 @@
                     barBorderRadius: 12,
                 },
             },
-            data: [400, 400, 300, 300, 300, 400, 400, 400, 300]
+            data: data_1
             },
             {
             name: '2',
@@ -488,7 +504,7 @@
                 }
                 
             },
-            data: [400, 500, 500, 500, 500, 400,400, 500, 500]
+            data: data_2
             },
             {
             name: '3',
@@ -506,7 +522,25 @@
                 barBorderRadius: 11,
                 }
             },
-            data: [400, 600, 700, 700, 1000, 400, 400, 600, 700]
+            data: data_3
+            },
+            {
+            name: '4',
+            type: 'bar',
+            barWidth: '15%',
+            itemStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: '#FAFAFA'
+                    }, {
+                        offset: 1,
+                        color: '#EECBAD'
+                    }]),
+                barBorderRadius: 11,
+                }
+            },
+            data: data_4
             }]
         };
 
@@ -540,27 +574,20 @@
     myChart3.setOption(option3)
 
     var myChart4 = echarts.init(document.getElementById('echarts_xyxgpj_four'));
+    var json_data = {{ anomaly_pie|safe }};
+    var total_anomaly = json_data['0'].data_1 + json_data['0'].data_2 + json_data['0'].data_3 + json_data['0'].data_4
     var data = [{
         "name": "1",
-        "value": 10
+        "value": data_1 = json_data['0'].data_1
     }, {
         "name": "2",
-        "value": 10
+        "value": data_1 = json_data['0'].data_2
     }, {
         "name": "3",
-        "value": 10
+        "value": data_1 = json_data['0'].data_3
     }, {
         "name": "4",
-        "value": 10
-    }, {
-        "name": "5",
-        "value": 10
-    }, {
-        "name": "6",
-        "value": 20
-    }, {
-        "name": "7",
-        "value": 30
+        "value": data_1 = json_data['0'].data_4
     }, ]
 
 
@@ -569,8 +596,8 @@
         color: ['#A0CE3A', '#31C5C0', '#1E9BD1', '#0F347B', '#585247', '#7F6AAD', '#009D85', "rgba(250,250,250,0.3)"],
         backgroundColor: '#21242e',
         title: {
-            text: '总数',
-            subtext: 7789,
+            text: '总异常件数',
+            subtext: total_anomaly,
             textStyle: {
                 color: '#f2f2f2',
                 fontSize: 20,
