@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <title>Document</title>
+    <script>
+        function show_time() {
+            window.setTimeout("show_time()", 1000);
+            today = new Date();
+            tim = today.getTime()
+            msPerDay = 24 * 60 * 60 * 1000
+            e_daysold = timeold / msPerDay
+            daysold = Math.floor(e_daysold);
+            e_hrsold = (e_daysold - daysold) * 24;
+            hrsold = Math.floor(e_hrsold);
+            e_minsold = (e_hrsold - hrsold) * 60;
+            minsold = Math.floor((e_hrsold - hrsold) * 60);
+            seconds = Math.floor((e_minsold - minsold) * 60);
+            let m = daysold + "天" + hrsold + "小时" + minsold + "分" + seconds + "秒";
+            $("#noeti").append(m)
+        }
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <span id="noeti">hhh</span>
+    </div>
+</div>
+</body>
+
+</html>

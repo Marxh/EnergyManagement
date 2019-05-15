@@ -1,0 +1,719 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=10">
+    <title>异常统计</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" type="text/css" href="{% static 'LineDetection/bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LineDetection/dist/css/ionicons.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LineDetection/dist/css/AdminLTE.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LineDetection/dist/css/skins/all-skins.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LineDetection/vince/css/vince.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LineDetection/vince/biao/css/font-awesome.min.css' %}">
+    <!--[if lt IE 9]>
+    <script src="dist/js/html5shiv.min.js"></script>
+    <script src="dist/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header class="main-header">
+        <a href="#" class="logo">
+      <span class="logo-mini">
+	  <img src="{% static 'LineDetection/vince/images/v01.png' %}">
+	  </span>
+            <span class="logo-lg"><img src="{% static 'LineDetection/vince/images/v01.png' %}">汽车制造</span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
+            <span class="all_title">基于物联网的汽车制造企业能耗管理云平台</span>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="{% static 'LineDetection/dist/img/user2-160x160.jpg' %}" class="user-image" alt="User Image">
+                            <span class="hidden-xs">管理员</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header">
+                                <img src="{% static 'LineDetection/dist/img/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
+                                <p>
+                                    姓名：管理员
+                                    <small>部门：信息部</small>
+                                </p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-right">
+                                    <a href="login.html" class="btn btn-default btn-flat">退出系统</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="{% static 'LineDetection/dist/img/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>当前用户：管理员</p>
+                    <p class="menu_time">
+                        时间：<span id="nowTime"></span></p>
+                </div>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li class="header">菜单 MENU</li>
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-home" style="font-size: 22px"></i> <span>首页</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="ssjc.html">
+                        <i class="fa fa-eye"></i> <span>实时监测</span>
+
+                    </a>
+                </li>
+                <li>
+                    <a href="yxjc.html">
+                        <i class="fa fa-print"></i> <span>运行监测</span>
+                    </a>
+                </li>
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-sliders"></i>
+                        <span>负荷响应</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="active"><a href="xyxgpj.html"><i class="fa fa-bookmark"></i> 响应效果评价</a></li>
+                        <li><a href="fhxyfx.html"><i class="fa fa-bookmark"></i> 负荷响应分析</a></li>
+
+                        <li><a href="xyfagl.html"><i class="fa fa-bookmark"></i> 响应方案管理</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="yjgl.html">
+                        <i class="fa fa-bell"></i> <span>预警管理</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-gears"></i>
+                        <span>设备管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="sbrk.html"><i class="fa fa-bookmark"></i> 设备入库</a></li>
+                        <li><a href="sbaz.html"><i class="fa fa-bookmark"></i> 设备安装</a></li>
+                        <li><a href="sbjx.html"><i class="fa fa-bookmark"></i> 设备检修</a></li>
+                        <li><a href="sbbf.html"><i class="fa fa-bookmark"></i> 设备报废</a></li>
+                        <li><a href="sbcx.html"><i class="fa fa-bookmark"></i> 设备查询</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="kzcl.html">
+                        <i class="fa fa-magnet"></i> <span>控制策略</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="xtjc.html">
+                        <i class="fa fa-map"></i> <span>系统集成</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </aside>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li class="active">响应效果评价</li>
+            </ol>
+        </section>
+        <div class="content qqq">
+            <div class="xyxgpj">
+                <div class="row">
+                    <div class="col-md-2 ssjc_left">
+                        <div class="ssjc_title">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;选择项目<span class="ssjc_title_right">
+          			</span>
+                            <div class="clear"></div>
+                            </p>
+                        </div>
+                        <!--           		<div class="ssjc_search">
+                                              <p>档案用户：<input type="text"></p>
+                                          </div> -->
+                        <div class="tree_menu">
+                            <!-- 树形导航一 -->
+                            <div class="tree well tree_one">
+                                <ul class="none_margin">
+                                    <li>
+                                        <span><i class="icon-folder-open"></i> <em> 汽车制造</em></span>
+                                        <ul>
+                                            <li>
+                                                <span><i class="icon-folder-open"></i>
+                                                    <a href = ''>能耗监控</a>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span><i class="icon-folder-open"></i>
+                                                    <a href = ''>异常列表</a>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span><i class="icon-folder-open"></i>
+                                                    <a href = ''>聚类结果</a>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span><i class="icon-folder-open"></i>
+                                                    <a href = ''>异常统计</a>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            
+                            <!-- 树形导航 -->
+                        
+                        </div>
+                        <!-- 	<div class="ssjc_left_bottom">
+                                <div class="ssjc_lbshare"><span class="ssjc_left_bottom_one"></span></div>
+                                <div class="ssjc_lbshare"><span class="ssjc_left_bottom_two"></span></div>
+                                <div class="ssjc_lbshare"><span class="ssjc_left_bottom_three"></span></div>
+                            </div> -->
+                    </div>
+
+
+                    <div class="col-md-8 xyxgpj_center">
+                        <div class="nei">
+                            <div class="xyxgpj_echarts">
+                                <div class="echarts_xyxgpj_three" id="echarts_xyxgpj_three">
+                                </div>
+                            </div>
+                            <div class="xyxgpj_echarts">
+                                <div class="echarts_xyxgpj_three" id="echarts_xyxgpj_four">
+                                </div>
+                            </div>
+                            <div class="ershi"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 ">
+                        <div class="echart_qu">
+                            <div class="echarts_xyxgpj_one" id="echarts_xyxgpj_one">
+                            </div>
+                        </div>
+
+                        <div class="echart_qu margin10">
+                            <div class="echarts_xyxgpj_two" id="echarts_xyxgpj_two">
+                            </div>
+                        </div>
+
+                        <div class="xyxgpj_rightbottom">
+                            <p class="yxpjxg_one">异常能耗数据</p>
+                            <div class="yxpjxg_two">
+                                <p>生产车辆数：</p>
+                            </div>
+                            <div class="yxpjxg_three">
+                                <p>异常总数：</p>
+                            </div>
+                            <p class="yxpjxg_four">能耗数据：</p>
+                            <div class="yxpjxg_five">
+                                <span>01夏季熔炉房控温策略</span><br>
+                                <span>调节开始时间：11：00</span><br>
+                                <span>调节结束时间:18：00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b></b>
+        </div>
+        <strong>Copyright &copy; 2014-2019 powersolver.com All Rights Reserved powered by 互联网+小组</strong>
+    </footer>
+    <div class="control-sidebar-bg"></div>
+</div>
+<script src="{% static 'LineDetection/vince/js/jquery-2.2.3.min.js' %}"></script>
+<script src="{% static 'LineDetection/vince/global.js' %}"></script>
+<script src="{% static 'LineDetection/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'LineDetection/dist/js/app.min.js' %}"></script>
+<script src="{% static 'LineDetection/dist/js/demo.js' %}"></script>
+<script src="{% static 'LineDetection/vince/js/nicescroll.js' %}"></script>
+<script src="{% static 'LineDetection/vince/js/demo.js' %}"></script>
+<script src="{% static 'LineDetection/vince/datapick/js/moment.js' %}"></script>
+<script src="{% static 'LineDetection/vince/js/echarts.min.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#xuanshi1').daterangepicker({singleDatePicker: true}, function (start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+
+    });
+</script>
+
+<script src="{% static 'LineDetection/vince/js/echarts.min.js' %}"></script>
+<script type="text/javascript">
+    /* 第一个图 */
+    var myChart1 = echarts.init(document.getElementById('echarts_xyxgpj_one'));
+    option1 = {
+        title: {
+            text: '计划完成',
+            textStyle: {
+                color: '#fff',
+                fontSize: 14,
+                fontWeight: 'normal'
+            },
+            padding: 10
+        },
+        series: [{
+            name: '计划完成情况',
+            type: 'pie',
+            radius: ['35%', '70%'],
+            center: ['50%', '50%'],
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '24',
+                        fontWeight: 'bold',
+                        color: '#fff'
+                    },
+                    position: 'center'
+                },
+                emphasis: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '20',
+                        fontWeight: 'bold',
+                        color: '#fff'
+                    }
+                }
+            },
+            data: [
+                {value: 67, name: '67%'},
+                {value: 33, name: ''},],
+            color: ['#55c45f', '#ff6b6b']
+        }]
+    };
+    myChart1.setOption(option1);
+
+    /* 第二个图 */
+    var myChart2 = echarts.init(document.getElementById('echarts_xyxgpj_two'));
+    option2 = {
+        title: {
+            text: '时间剩余情况',
+            textStyle: {
+                color: '#fff',
+                fontSize: 14,
+                fontWeight: 'normal'
+            },
+            padding: 10
+        },
+        series: [{
+            name: '时间剩余情况',
+            type: 'pie',
+            radius: ['35%', '70%'],
+            center: ['50%', '50%'],
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '24',
+                        fontWeight: 'bold',
+                        color: '#fff'
+                    },
+                    position: 'center'
+                },
+                emphasis: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '20',
+                        fontWeight: 'bold',
+                        color: '#fff'
+                    }
+                }
+            },
+            data: [
+                {value: 79, name: '79%'},
+                {value: 21, name: ''},],
+            color: ['#55c45f', '#ff6b6b']
+        }]
+    };
+    myChart2.setOption(option2);
+
+    var myChart3 = echarts.init(document.getElementById('echarts_xyxgpj_three'));
+    var option3 = {
+        backgroundColor:'#21242e',
+            tooltip: {
+            trigger: 'axis',
+            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+            }
+            },
+            grid: {
+            left: '2%',
+            right: '4%',
+            bottom: '14%',
+            top:'16%',
+            containLabel: true
+            },
+            legend: {
+            data: ['1', '2', '3'],
+            right: 10,
+            top:12,
+            textStyle: {
+                color: "#fff"
+            },
+            itemWidth: 12,
+            itemHeight: 10,
+            // itemGap: 35
+        },
+            xAxis: {
+            type: 'category',
+            data: ['2012','2013','2014','2015','2016','2017','2018','2019'],
+            axisLine: {
+                lineStyle: {
+                color: 'white'
+
+                }
+            },
+            axisLabel: {
+                // interval: 0,
+                // rotate: 40,
+                textStyle: {
+                fontFamily: 'Microsoft YaHei'
+                }
+            },
+            },
+
+            yAxis: {
+            type: 'value',
+            max:'1200',
+            axisLine: {
+                show: false,
+                lineStyle: {
+                color: 'white'
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                color: 'rgba(255,255,255,0.3)'
+                }
+            },
+            axisLabel: {}
+            },
+            "dataZoom": [{
+            "show": true,
+            "height": 12,
+            "xAxisIndex": [
+                0
+            ],
+            bottom:'8%',
+            "start": 10,
+            "end": 90,
+            handleIcon: 'path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z',
+            handleSize: '110%',
+            handleStyle:{
+                color:"#d3dee5",
+
+            },
+            textStyle:{
+                color:"#fff"},
+            borderColor:"#90979c"
+            }, {
+            "type": "inside",
+            "show": true,
+            "height": 15,
+            "start": 1,
+            "end": 35
+            }],
+            series: [{
+            name: '1',
+            type: 'bar',
+            barWidth: '15%',
+            itemStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: '#fccb05'
+                    }, {
+                        offset: 1,
+                        color: '#f5804d'
+                    }]),
+                    barBorderRadius: 12,
+                },
+            },
+            data: [400, 400, 300, 300, 300, 400, 400, 400, 300]
+            },
+            {
+            name: '2',
+            type: 'bar',
+            barWidth: '15%',
+            itemStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: '#8bd46e'
+                    }, {
+                        offset: 1,
+                        color: '#09bcb7'
+                    }]),
+                    barBorderRadius: 11,
+                }
+                
+            },
+            data: [400, 500, 500, 500, 500, 400,400, 500, 500]
+            },
+            {
+            name: '3',
+            type: 'bar',
+            barWidth: '15%',
+            itemStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: '#248ff7'
+                    }, {
+                        offset: 1,
+                        color: '#6851f1'
+                    }]),
+                barBorderRadius: 11,
+                }
+            },
+            data: [400, 600, 700, 700, 1000, 400, 400, 600, 700]
+            }]
+        };
+
+        var app = {
+            currentIndex: -1,
+        };
+        setInterval(function () {
+            var dataLen = option3.series[0].data.length;
+
+            // 取消之前高亮的图形
+            myChart3.dispatchAction({
+            type: 'downplay',
+            seriesIndex: 0,
+            dataIndex: app.currentIndex
+            });
+            app.currentIndex = (app.currentIndex + 1) % dataLen;
+            //console.log(app.currentIndex);
+            // 高亮当前图形
+            myChart3.dispatchAction({
+            type: 'highlight',
+            seriesIndex: 0,
+            dataIndex: app.currentIndex,
+            });
+            // 显示 tooltip
+            myChart3.dispatchAction({
+            type: 'showTip',
+            seriesIndex: 0,
+            dataIndex: app.currentIndex
+            });
+        }, 1000);
+    myChart3.setOption(option3)
+
+    var myChart4 = echarts.init(document.getElementById('echarts_xyxgpj_four'));
+    var data = [{
+        "name": "1",
+        "value": 10
+    }, {
+        "name": "2",
+        "value": 10
+    }, {
+        "name": "3",
+        "value": 10
+    }, {
+        "name": "4",
+        "value": 10
+    }, {
+        "name": "5",
+        "value": 10
+    }, {
+        "name": "6",
+        "value": 20
+    }, {
+        "name": "7",
+        "value": 30
+    }, ]
+
+
+    option4 = {
+
+        color: ['#A0CE3A', '#31C5C0', '#1E9BD1', '#0F347B', '#585247', '#7F6AAD', '#009D85', "rgba(250,250,250,0.3)"],
+        backgroundColor: '#21242e',
+        title: {
+            text: '总数',
+            subtext: 7789,
+            textStyle: {
+                color: '#f2f2f2',
+                fontSize: 20,
+                // align: 'center'
+            },
+            subtextStyle: {
+                fontSize: 20,
+                color: ['#ff9d19']
+            },
+            x: 'center',
+            y: 'center',
+        },
+        grid: {
+            bottom: 150,
+            left: 100,
+            right: '10%'
+        },
+        legend: {
+            orient: 'vertical',
+            top: "middle",
+            right: "5%",
+            textStyle: {
+                color: '#f2f2f2',
+                fontSize: 25,
+
+            },
+            icon: 'roundRect',
+            data: data,
+        },
+        series: [
+            // 主要展示层的
+            {
+                radius: ['30%', '61%'],
+                center: ['50%', '50%'],
+                type: 'pie',
+                label: {
+                    normal: {
+                        show: true,
+                        formatter: "{c}%",
+                        textStyle: {
+                            fontSize: 20,
+
+                        },
+                        position: 'outside'
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: true,
+                        length: 30,
+                        length2: 55
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                name: "异常种类数量",
+                data: data,
+
+            },
+            // 边框的设置
+            {
+                radius: ['30%', '34%'],
+                center: ['50%', '50%'],
+                type: 'pie',
+                label: {
+                    normal: {
+                        show: false
+                    },
+                    emphasis: {
+                        show: false
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    },
+                    emphasis: {
+                        show: false
+                    }
+                },
+                animation: false,
+                tooltip: {
+                    show: false
+                },
+                data: [{
+                    value: 1,
+                    itemStyle: {
+                        color: "rgba(250,250,250,0.3)",
+                    },
+                }],
+            }, {
+                name: '外边框',
+                type: 'pie',
+                clockWise: false, //顺时加载
+                hoverAnimation: false, //鼠标移入变大
+                center: ['50%', '50%'],
+                radius: ['65%', '65%'],
+                label: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: [{
+                    value: 9,
+                    name: '',
+                    itemStyle: {
+                        normal: {
+                            borderWidth: 2,
+                            borderColor: '#0b5263'
+                        }
+                    }
+                }]
+            },
+        ]
+    };
+    myChart4.setOption(option4)
+ 
+    myChart1.resize();
+    myChart2.resize();
+    myChart3.resize();
+    myChart4.resize();
+
+    window.addEventListener("resize", function () {
+        myChart1.resize();
+        myChart2.resize();
+        myChart3.resize();
+        myChart4.resize();
+    });
+
+    // 响应效果评价页面图标切换
+    $(".charqie_left").click(function () {
+        $(this).addClass("charqie_choice").siblings().removeClass("charqie_choice");
+        var charji = $(this).index();
+        $(".echart_qu").children().eq(charji).css({"display": "block"}).siblings().css({"display": "none"})
+        myChart1.resize();
+        myChart2.resize();
+    })
+    // 响应效果评价页面图标切换
+
+</script>
+</body>
+</html>

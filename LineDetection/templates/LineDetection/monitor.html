@@ -1,0 +1,561 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=10">
+    <title>实时监测</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" type="text/css" href="{% static 'LineDetection/bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LineDetection/dist/css/ionicons.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LineDetection/dist/css/AdminLTE.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LineDetection/dist/css/skins/all-skins.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LineDetection/vince/css/vince.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LineDetection/vince/biao/css/font-awesome.min.css' %}">
+    <!--[if lt IE 9]>
+    <script src="dist/js/html5shiv.min.js"></script>
+    <script src="dist/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header class="main-header">
+        <a href="#" class="logo">
+      <span class="logo-mini">
+	  <img src="{% static 'LineDetection/vince/images/v01.png' %}">
+	  </span>
+            <span class="logo-lg"><img src="{% static 'LineDetection/vince/images/v01.png' %}">汽车制造</span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
+            <span class="all_title">基于物联网的汽车制造企业能耗管理云平台</span>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="{% static 'LineDetection/dist/img/user2-160x160.jpg' %}" class="user-image" alt="User Image">
+                            <span class="hidden-xs">管理员</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header">
+                                <img src="{% static 'LineDetection/dist/img/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
+                                <p>
+                                    姓名：管理员
+                                    <small>部门：信息部</small>
+                                </p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-right">
+                                    <a href="login.html" class="btn btn-default btn-flat">退出系统</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="{% static 'LineDetection/dist/img/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>当前用户：管理员</p>
+                    <p class="menu_time">
+                        时间：<span id="nowTime"></span></p>
+                </div>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="header">菜单 MENU</li>
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-home" style="font-size: 22px"></i> <span>首页</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="ssjc.html">
+                        <i class="fa fa-eye"></i> <span>实时监测</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="yxjc.html">
+                        <i class="fa fa-print"></i> <span>运行监测</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-sliders"></i>
+                        <span>负荷响应</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="xyxgpj.html"><i class="fa fa-bookmark"></i> 响应效果评价</a></li>
+                        <li><a href="fhxyfx.html"><i class="fa fa-bookmark"></i> 负荷响应分析</a></li>
+                        <li><a href="xyfagl.html"><i class="fa fa-bookmark"></i> 响应方案管理</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="yjgl.html">
+                        <i class="fa fa-bell"></i> <span>预警管理</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-gears"></i>
+                        <span>设备管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="sbrk.html"><i class="fa fa-bookmark"></i> 设备入库</a></li>
+                        <li><a href="sbaz.html"><i class="fa fa-bookmark"></i> 设备安装</a></li>
+                        <li><a href="sbjx.html"><i class="fa fa-bookmark"></i> 设备检修</a></li>
+                        <li><a href="sbbf.html"><i class="fa fa-bookmark"></i> 设备报废</a></li>
+                        <li><a href="sbcx.html"><i class="fa fa-bookmark"></i> 设备查询</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="kzcl.html">
+                        <i class="fa fa-magnet"></i> <span>控制策略</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="xtjc.html">
+                        <i class="fa fa-map"></i> <span>系统集成</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </aside>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li class="active">实时监测</li>
+            </ol>
+        </section>
+        <div class="content qqq">
+            <div class="ssjc">
+                <div class="row">
+                    <div class="col-md-2 ssjc_left">
+                        <div class="ssjc_title">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;选择项目<span class="ssjc_title_right">
+          			</span>
+                            <div class="clear"></div>
+                            </p>
+                        </div>
+                        <!--           		<div class="ssjc_search">
+                                              <p>档案用户：<input type="text"></p>
+                                          </div> -->
+                        <div class="tree_menu">
+                            <!-- 树形导航一 -->
+                            <div class="tree well tree_one">
+                                <ul class="none_margin">
+                                    <li>
+                                        <span><i class="icon-folder-open"></i> <em> 汽车制造</em></span>
+                                        <ul>
+                                            <li>
+                                                <span><i class="icon-folder-open"></i>
+                                                    <a href = ''>能耗监控</a>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span><i class="icon-folder-open"></i>
+                                                    <a href = ''>异常列表</a>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span><i class="icon-folder-open"></i>
+                                                    <a href = ''>聚类结果</a>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span><i class="icon-folder-open"></i>
+                                                    <a href = "{% url 'LineDetection:statistics' facility_id %}">异常统计</a>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            
+                            <!-- 树形导航 -->
+                        
+                        </div>
+                        <div class="ssjc_left_bottom_four">
+                            <div class='echarts_ssjc_one' id="echarts_ssjc_one"></div>
+                        </div>
+                        <!-- 	<div class="ssjc_left_bottom">
+                                <div class="ssjc_lbshare"><span class="ssjc_left_bottom_one"></span></div>
+                                <div class="ssjc_lbshare"><span class="ssjc_left_bottom_two"></span></div>
+                                <div class="ssjc_lbshare"><span class="ssjc_left_bottom_three"></span></div>
+                            </div> -->
+                    </div>
+
+                    <div class="col-md-10 ssjc_right">
+
+                        <div class="ssjc_right_up">
+                            <div class="nei">
+                                <div class="waibaohei">
+                                        <div class="xyxgpj_top">
+                                            <div class="xyxgpj_top_nei">
+                                                <div class="xyxgpj_baifen"></div>
+                                                <div class="xyxypj_left">
+                                                    <p>{% widthratio latest_energy energy_limit 100 %}%</p>
+                                                </div>
+        
+                                                <div class="xyxgpj_right">
+                                                    <p> 当前设备能耗：<span>{{ latest_energy }}</span>KW &nbsp;&nbsp;&nbsp;&nbsp; 设备负荷极值：<span>{{ energy_limit }}</span>KW&nbsp;&nbsp;&nbsp;&nbsp;
+                                                         &nbsp;&nbsp;&nbsp;&nbsp; 当前运行时间: 2019-3-8 </p>
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                <div class="ssjc_ru_title">
+          				<span>
+          				曲线类型：
+          					<select class="biaoti_select">
+							  <option value="曲线图">曲线图</option>
+							  <option value="折线图">折线图</option>
+							  <option value="柱状图">柱状图</option>
+							</select>
+          				</span>
+                                    <span>
+          				显示类型：
+          					<select class="biaoti_select">
+							  <option value="时" selected="selected">时</option>
+							  <option value="日">日</option>
+							  <option value="周">周</option>
+                			<option value="月">月</option>
+							</select>
+          				</span>
+                                    <span class="tiaoshijian">
+                    开始时间：
+                    <input type="text" class="shi" id="xuanshi1" readonly value="2017-10-11">
+                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                    <span class="tiaoshijian">
+                    结束时间：
+                    <input type="text" class="shi" id="xuanshi2" readonly value="2017-10-12">
+                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                    <span class="float_right">
+                    <input type="submit" value="查询" class="youcecha">
+                  </span>
+
+
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="ssjc_ru_table">
+                                    <div class="echarts_ssjc" id="echarts_ssjc_two">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ssjc_right_bottom">
+                                <div class="nei">
+                                    <p>实时能耗数据</p>
+                                    <div class="ssjc_rub_table">
+                                        <table class="tj_table" border="0">
+                                            <thead>
+                                            <tr>
+                                                <td>设备名称</td>
+                                                <td>能耗时间</td>
+                                                <td>能耗量</td>
+                                                <td style = 'text-align: center'>超阈值否</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% if energy_list %} 
+                                                {% for energy in energy_list %}
+                                                    <tr>
+                                                        <td>{{ energy.facility_name }}</td>
+                                                        <td>{{ energy.energy_date }}</td>
+                                                        <td>{{ energy.energy }}</td>
+                                                        {% if energy > 100 %}
+                                                            <td style = 'text-align: center'><img src="{% static 'LineDetection/vince/images/cry.png' %}"></img></td>
+                                                        {% else %}
+                                                            <td style = 'text-align: center'><img src="{% static 'LineDetection/vince/images/smile.png' %}"></img></td>
+                                                        {% endif %}
+                                                    </tr>
+                                                {% endfor %}
+                                            {% else %}
+                                                <tr>
+                                                    <td>暂无异常</td>
+                                                    <td>暂无异常</td>
+                                                    <td>暂无异常</td>
+                                                    <td>暂无异常</td>
+                                                </tr>
+                                            {% endif %}
+                                            </tbody>
+                                        </table>
+                                        <div class="t_fanye">
+                                            <span class="upten"></span>
+                                            <span class="up"></span>
+                                            <span class="split"></span>
+                                            <span class="page_info_one">第 1 / 1 页</span>
+                                            <span class="split"></span>
+                                            <span class="dowm"></span>
+                                            <span class="downten"></span>
+                                            <span class="page_info_two">页记录数 1</span>
+                                            <span class="page_info_three">当前1-1条记录，共1条记录</span>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                    <div class="cheng_ershi"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b></b>
+        </div>
+        <strong>Copyright &copy; 2014-2019 powersolver.com All Rights Reserved powered by 互联网+小组</strong>
+    </footer>
+    <div class="control-sidebar-bg"></div>
+</div>
+<script src="{% static 'LineDetection/vince/js/jquery-2.2.3.min.js' %}"></script>
+<script src="{% static 'LineDetection/vince/global.js' %}"></script>
+<script src="{% static 'LineDetection/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'LineDetection/dist/js/app.min.js' %}"></script>
+<script src="{% static 'LineDetection/dist/js/demo.js' %}"></script>
+<script src="{% static 'LineDetection/vince/js/nicescroll.js' %}"></script>
+<script src="{% static 'LineDetection/vince/js/demo.js' %}"></script>
+<script src="{% static 'LineDetection/vince/datapick/js/moment.js' %}"></script>
+<script src="{% static 'LineDetection/vince/js/echarts.min.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#xuanshi1').daterangepicker({singleDatePicker: true}, function (start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+        $('#xuanshi2').daterangepicker({singleDatePicker: true}, function (start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+    });
+</script>
+<script src="{% static 'LineDetection/vince/js/echarts.min.js' %}"></script>
+<script type="text/javascript">
+
+    /* 第一个图 */
+    var myChart1 = echarts.init(document.getElementById('echarts_ssjc_one'));
+    var json_data = {{ five_day_energy|safe }};
+    // 关于“省优质幼儿园评选”的投票
+    var chartData = json_data['0'].energy;
+    var chartName = json_data['0'].hour;
+    // var unit='亿元';
+    var myColor = ['#FFA483','#F97F53','#F45922'];
+    option1 = {
+          title: {
+             text: '近期生产能耗',
+             left:'0%',
+             textStyle: {
+                 color: '#fff',
+                 fontSize:14,
+             }
+         },
+    
+        backgroundColor: '#21242e',
+        grid: {
+            left: '5%',
+            right: '20%',
+            bottom: '10%',
+            top: '10%',
+        },
+        xAxis: [{
+                show: false,
+            },
+            {
+                show: false,
+            }
+        ],
+        yAxis: {
+            type: 'category',
+            inverse: true,
+            show: false
+        },
+
+        series: [
+
+            //亮色条 百分比
+            {
+                show: true,
+                type: 'bar',
+                barGap: '-100%',
+                barWidth: '20%',
+                z: 2,
+                itemStyle: {
+                    normal: {
+                        color: function(params) {
+                            var num = myColor.length;
+                            return myColor[params.dataIndex % num]
+                        }
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 12,
+                            fontWeight: 'bold'
+                        },
+                        position: 'right',
+                        formatter: function(data) {
+                            return (chartData[data.dataIndex]).toFixed(0);
+                        }
+                    }
+                },
+                data: chartData,
+            },
+            //年份
+            {
+                show: true,
+                type: 'bar',
+                xAxisIndex: 1, //代表使用第二个X轴刻度
+                barGap: '-100%',
+                barWidth: '10%',
+                itemStyle: {
+                    normal: {
+                        barBorderRadius: 200,
+                        color: 'transparent'
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: [0, '-20'],
+                        textStyle: {
+                            fontSize:14,
+                            color: '#fff',
+                        },
+                        formatter: function(data) {
+                            return (chartName[data.dataIndex]).toString() + ' 点';
+                        }
+                    }
+                },
+                data: chartData
+            }
+        ]
+    };
+    myChart1.setOption(option1); 
+
+
+    /* 第二个图 */
+    var myChart2 = echarts.init(document.getElementById('echarts_ssjc_two'));
+    var date = ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'];
+    /*
+    var test_list = [1,2,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+
+    for (var i = 0; i < 24; i++) {
+        // date.push((i + 1) + ':00');
+        randomData.push(test_list[i]);
+    }
+
+    */
+    var randomData = [];
+
+    for (var i = 0; i < 24; i++) {
+        // date.push((i + 1) + ':00');
+        randomData.push(Math.floor(Math.random() * 100));
+    }
+
+    option2 = {
+        title: {
+            text: '2017年1月1日0:00—2017年1月1日24:00项目用电量历史分析',
+            left: 'center',
+            textStyle: {
+                color: '#fff',
+                fontSize: 14,
+                fontWeight: 'normal'
+            },
+            padding: 13
+        },
+
+        legend: {
+            bottom: '2%',
+            textStyle: {
+                color: '#fff',
+            },
+            data: ['项目']
+        },
+
+        textStyle: {color: '#fff'},
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} 耗能量: {c}'
+        },
+        xAxis: {
+            type: 'category',
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: 'rgba(43,46,56,0.8)'
+                }
+            },
+            data: date,
+            // data: ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00']
+        },
+        yAxis: {
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: 'rgba(43,46,56,0.8)'
+                }
+            },
+            scale: true
+        },
+        grid: {
+            top: '13%',
+            left: '3%',
+            right: '4%',
+            bottom: '15%',
+            containLabel: true
+        },
+        series: [
+            {
+                name: '项目',
+                type: 'line',
+                data: randomData,
+                symbol: 'circle',
+                symbolSize: 10,
+                lineStyle: {normal: {color: '#ff6b6b'}}
+            }]
+    };
+
+    myChart2.setOption(option2);
+    window.addEventListener("resize", function () {
+        myChart2.resize();
+    });
+    var len = date.length;
+    setInterval(function () {
+        //randomData.push(test_list[i]);
+        randomData.push(Math.floor(Math.random() * 100));
+        randomData.shift();
+        var ite = date.shift();
+        date.unshift(ite);
+        date.push(ite)
+        console.log(date.length)
+        date.shift();
+        console.log(date)
+        myChart2.setOption({
+            xAxis: {
+                data: date
+            },
+            series: [{
+                data: randomData
+            }]
+        });
+    }, 2000);
+
+</script>
+</body>
+</html>

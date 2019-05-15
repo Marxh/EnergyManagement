@@ -1,0 +1,2 @@
+select LineDetection_season_goal.goal, LineDetection_season_goal.season, LineDetection_production_amount.amount, LineDetection_production_amount.production_date
+from LineDetection_production_amount left join LineDetection_season_goal on LineDetection_production_amount.season_id = LineDetection_season_goal.id
