@@ -11,6 +11,7 @@ import pandas as pd
 import json
 import numpy as np
 import calendar
+from sklearn.cluster import KMeans
 
 # Create your views here.
 
@@ -117,6 +118,31 @@ def statistics(request, facility_id):
         'data_3':np.sum(anomaly_pivot['3_flag'].tolist()),
         'data_4':np.sum(anomaly_pivot['4_flag'].tolist())
     }]
-    return render(request, 'LineDetection/statistics.html', {'prod':prod_json,'time': time_json, 'anomaly_bar': anomaly_bar_json,\
+    return render(request, 'LineDetection/statistics.html', {'prod':prod_json,'time': time_json,'facility_id': facility_id, 'anomaly_bar': anomaly_bar_json,\
                   'anomaly_pie': anomaly_pie_json,'goal':goal, 'done_amount':done_amount, 'total_time':total_time,'passed_time':passed_time,\
                   'left_amount':left_amount}) 
+
+def cluster(request, facility_id):
+    #total_energy = Energy.objects.filter(facility_id = facility_id)
+    #total_energy = Energy.objects.values('energy','energy_date').all()
+    #total_energy = total_energy.to_dataframe()
+    #total_energy.to_csv('total_energy.csv',index=False)
+    total_energy = pd.read_csv('total_energy.csv')
+    total_energy_list = total_energy['energy'].tolist()
+    total_date_list = total_energy['energy_date'].tolist()
+    kmeans_energy = []
+    kmeans_date = []
+    for i in range(200):
+        temp_list = total_energy_list[1000*i:1000*i+1000]
+        kmeans_energy.append(temp_list)
+    for i in range(200):
+        temp_list = [0,0]
+        temp_list[0] = total_date_list[1000*i]
+        temp_list[1] = total_date_list[1000*i+1000-1]
+        kmeans_date.append(temp_list)
+
+    k_means = KMeans(n_clusters=6, random_state=10)
+    k_means.fit(kmeans_energy)
+    center=k_means.cluster_centers_
+    labels=k_means.labels_
+    return render(request, 'LineDetection/cluster.html', {'facility_id':facility_id}) 
