@@ -166,7 +166,7 @@
                                             </li>
                                             <li>
                                                 <span><i class="icon-folder-open"></i>
-                                                    <a href = ''>异常日历</a>
+                                                    <a href = "{% url 'LineDetection:calender' facility_id %}">异常日历</a>
                                                 </span>
                                             </li>
                                             <li>
@@ -243,24 +243,22 @@
                                         <table class="tj_table" border="0">
                                             <thead>
                                             <tr>
-                                                <td>设备名称</td>
                                                 <td>聚类簇</td>
-                                                <td>异常原因</td>
                                                 <td style = 'text-align: center'>是否异常</td>
+                                                <td>异常原因</td>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% if energy_list %} 
-                                                {% for energy in energy_list %}
+                                            {% if cluster_info %} 
+                                                {% for cluster in cluster_info %}
                                                     <tr>
-                                                        <td>{{ energy.facility_name }}</td>
-                                                        <td>{{ energy.energy_date }}</td>
-                                                        <td>{{ energy.energy }}</td>
-                                                        {% if energy > 100 %}
+                                                        <td>{{ cluster.cluster_id }}</td>
+                                                        {% if cluster.anomaly_condition == 1 %}
                                                             <td style = 'text-align: center'><img src="{% static 'LineDetection/vince/images/cry.png' %}"></img></td>
                                                         {% else %}
                                                             <td style = 'text-align: center'><img src="{% static 'LineDetection/vince/images/smile.png' %}"></img></td>
                                                         {% endif %}
+                                                        <td>{{ cluster.anomaly_comments }}</td>
                                                     </tr>
                                                 {% endfor %}
                                             {% else %}
@@ -299,7 +297,7 @@
         <div class="pull-right hidden-xs">
             <b></b>
         </div>
-        <strong>Copyright &copy; 2014-2019 powersolver.com All Rights Reserved powered by 互联网+小组</strong>
+        <strong>Copyright &copy; 2014-2019 powersolver.com All Rights Reserved powered by Shanyue</strong>
     </footer>
     <div class="control-sidebar-bg"></div>
 </div>
@@ -446,7 +444,7 @@
                     yAxis: yAxes,
                     series: series
             };
-    myChart1.setOption(option1); 
+    myChart1.setOption(option1);
     
     var myChart2 = echarts.init(document.getElementById('echarts_ssjc_two'));
     var easingFuncs={{ json_cluster|safe }};

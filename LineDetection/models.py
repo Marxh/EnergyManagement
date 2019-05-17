@@ -43,7 +43,9 @@ class production_amount(models.Model):
 class Cluster(models.Model):
     facility = models.ForeignKey(Facility, on_delete=models.CASCADE)
     cluster_id = models.IntegerField(default=0)
-    position = models.IntegerField(default=0)
-    energy = models.FloatField(default = 0)
-    season = models.IntegerField(default=0, null=True)
+    anomaly_condition = models.IntegerField(default=0)
+    anomaly_comments = models.CharField(max_length=200, default = '', null=True)
+    #position = models.IntegerField(default=0)
+    #energy = models.FloatField(default = 0)
+    #season = models.IntegerField(default=0, null=True)
     objects = DataFrameManager()

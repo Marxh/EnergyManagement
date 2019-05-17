@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from itertools import chain
-from .models import Facility, Energy, Anomaly,  season_goal, production_amount
+from .models import Facility, Energy, Anomaly,Cluster, season_goal, production_amount
 from .utils import *
 import pandas as pd
 import json
@@ -162,4 +162,10 @@ def cluster(request, facility_id):
         temp_cluster['ydata'] = list(center[i])
         temp_cluster['type'] = 'line'
         json_cluster.append(temp_cluster)
-    return render(request, 'LineDetection/cluster.html', {'json_cluster':json.dumps(json_cluster),'facility_id':facility_id}) 
+    
+    cluster_info = Cluster.objects.all()
+    return render(request, 'LineDetection/cluster.html', {'json_cluster':json.dumps(json_cluster),'facility_id':facility_id,\
+                                                           'cluster_info':cluster_info})
+
+def calender(request, facility_id):
+    return render(request, 'LineDetection/calender.html', {'facility_id':facility_id})

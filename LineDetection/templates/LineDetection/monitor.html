@@ -166,7 +166,7 @@
                                             </li>
                                             <li>
                                                 <span><i class="icon-folder-open"></i>
-                                                    <a href = ''>异常日历</a>
+                                                    <a href = "{% url 'LineDetection:calender' facility_id %}">异常日历</a>
                                                 </span>
                                             </li>
                                             <li>
@@ -275,7 +275,7 @@
                                                         <td>{{ energy.facility_name }}</td>
                                                         <td>{{ energy.energy_date }}</td>
                                                         <td>{{ energy.energy }}</td>
-                                                        {% if energy > 100 %}
+                                                        {% if energy.energy > 100 %}
                                                             <td style = 'text-align: center'><img src="{% static 'LineDetection/vince/images/cry.png' %}"></img></td>
                                                         {% else %}
                                                             <td style = 'text-align: center'><img src="{% static 'LineDetection/vince/images/smile.png' %}"></img></td>
@@ -318,7 +318,7 @@
         <div class="pull-right hidden-xs">
             <b></b>
         </div>
-        <strong>Copyright &copy; 2014-2019 powersolver.com All Rights Reserved powered by 互联网+小组</strong>
+        <strong>Copyright &copy; 2014-2019 powersolver.com All Rights Reserved powered by Shanyue</strong>
     </footer>
     <div class="control-sidebar-bg"></div>
 </div>

@@ -8,6 +8,7 @@ urlpatterns = [
     path('monitor/<int:facility_id>/', views.monitor, name='monitor'),
     path('statistics/<int:facility_id>/',views.statistics, name='statistics'),
     path('cluster/<int:facility_id>/',views.cluster, name='cluster'),
+    path('calender/<int:facility_id>/',views.calender, name='calender'),
 #    path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
 #    path('<int:question_id>/vote/', views.vote, name='vote'),
 ]
