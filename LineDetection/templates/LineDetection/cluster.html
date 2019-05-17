@@ -229,17 +229,24 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="nei">  
+                                <div class="ssjc_ru_table">
+                                    <div class="echarts_ssjc" id="echarts_ssjc_two">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="ssjc_right_bottom">
                                 <div class="nei">
-                                    <p>实时能耗数据</p>
+                                    <p>聚类标注</p>
                                     <div class="ssjc_rub_table">
                                         <table class="tj_table" border="0">
                                             <thead>
                                             <tr>
                                                 <td>设备名称</td>
-                                                <td>能耗时间</td>
-                                                <td>能耗量</td>
-                                                <td style = 'text-align: center'>超阈值否</td>
+                                                <td>聚类簇</td>
+                                                <td>异常原因</td>
+                                                <td style = 'text-align: center'>是否异常</td>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -320,9 +327,6 @@
 
     /* 第一个图 */
     var myChart1 = echarts.init(document.getElementById('echarts_ssjc_one'));
-    //var json_data = {{ five_day_energy|safe }};
-    //var chartData = json_data['0'].energy;
-    //var chartName = json_data['0'].hour;
     var N_POINT = 20;
     var grids = [];
     var xAxes = [];
@@ -336,26 +340,7 @@
                         '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
                         '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0',
                         '#E87C25','#FCCE10','#C1232B','#B5C334','#72D871']
-    var easingFuncs=[
-            {"name":'北京',"value": 35664,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'bar'},
-            {"name":'天津',"value": 5446,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'line'},
-            {"name":'上海',"value": 35664,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'bar'},
-            {"name":'杭州',"value": 35664,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'line'},
-            {"name":'黑龙江',"value": 35664,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'bar'},
-            {"name":'新疆',"value": 35664,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'bar'},
-            {"name":'大连',"value": 35664,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'bar'},
-            {"name":'青岛',"value": 43555,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'line'},
-            {"name":'湖南',"value": 13322,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'bar'},
-            {"name":'山西',"value": 5454,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'line'},
-            {"name":'陕西',"value": 657,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'line'},
-            {"name":'甘肃',"value": 35664,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'bar'},
-            {"name":'四川',"value": 35664,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'line'},
-            {"name":'云南',"value": 35664,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'bar'},
-            {"name":'西藏',"value": 35664,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'line'},
-            {"name":'海南',"value": 35664,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'bar'},
-            {"name":'江西',"value": 35664,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'line'},
-            {"name":'福建',"value": 35664,"xdata":['周一','周二','周三','周四','周五'],"ydata":[23,45,12,32,11],"type":'bar'}
-        ];
+    var easingFuncs={{ json_cluster|safe }};
     echarts.util.each(easingFuncs, function (easingFunc, name) {
                 grids.push({
                     show: false,
@@ -365,8 +350,7 @@
                 });
                 xAxes.push({
                     type: 'category',
-                    show: true,
-                    name:'日',
+                    show: false,
                     nameGap:'1',
                     nameTextStyle:{
                         color:'#fff'
@@ -443,12 +427,12 @@
             });
             
             //定位每个图形的位置
-            var rowNumber =  Math.floor(Math.sqrt(count))-1;
+            var rowNumber =  Math.floor(Math.sqrt(count));
             echarts.util.each(grids, function (grid, idx) {
                 grid.left = ((idx % rowNumber) / rowNumber * 100+3) + '%';
-                grid.top = (Math.floor(idx / rowNumber) / rowNumber * 50+4) + '%';
-                grid.width = (1 / rowNumber * 92-5) + '%';
-                grid.height = (1 / rowNumber * 25) + '%';
+                grid.top = (Math.floor(idx / rowNumber) / rowNumber * 50+12) + '%';
+                grid.width = (1 / rowNumber * 92) + '%';
+                grid.height = (1 / rowNumber * 45) + '%';
             
                 titles[idx].left = parseFloat(grid.left) +parseFloat(grid.width) / 2+ '%';
                 titles[idx].top = parseFloat(grid.top)-3.5 + '%';
@@ -463,6 +447,85 @@
                     series: series
             };
     myChart1.setOption(option1); 
+    
+    var myChart2 = echarts.init(document.getElementById('echarts_ssjc_two'));
+    var easingFuncs={{ json_cluster|safe }};
+    option2 = {
+        backgroundColor:'#21242e',
+        title: {
+            text: '聚类堆积折线图',
+            textStyle: {
+                        fontSize: 16,
+                        color:'white',
+                        fontWeight: 'normal'
+                    }
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['cluster_0','cluster_1','cluster_2','cluster_3','cluster_4','cluster_5'],
+            textStyle: {
+                        fontSize: 16,
+                        color:'white',
+                        fontWeight: 'normal'
+                    }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            show:false,
+            data: easingFuncs[0].xdata
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name:'cluster_0',
+                type:'line',
+                data:easingFuncs[0].ydata
+            },
+            {
+                name:'cluster_1',
+                type:'line',
+                data:easingFuncs[1].ydata
+            },
+            {
+                name:'cluster_2',
+                type:'line',
+                data:easingFuncs[2].ydata
+            },
+            {
+                name:'cluster_3',
+                type:'line',
+                data:easingFuncs[3].ydata
+            },
+            {
+                name:'cluster_4',
+                type:'line',
+                data:easingFuncs[4].ydata
+            },
+            {
+                name:'cluster_5',
+                type:'line',
+                data:easingFuncs[5].ydata
+            }
+        ]
+    };
+    myChart2.setOption(option2);
+
 </script>
 </body>
 </html>

@@ -12,6 +12,7 @@ import json
 import numpy as np
 import calendar
 from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score, silhouette_samples
 
 # Create your views here.
 
@@ -126,7 +127,6 @@ def cluster(request, facility_id):
     #total_energy = Energy.objects.filter(facility_id = facility_id)
     #total_energy = Energy.objects.values('energy','energy_date').all()
     #total_energy = total_energy.to_dataframe()
-    #total_energy.to_csv('total_energy.csv',index=False)
     total_energy = pd.read_csv('total_energy.csv')
     total_energy_list = total_energy['energy'].tolist()
     total_date_list = total_energy['energy_date'].tolist()
@@ -140,9 +140,26 @@ def cluster(request, facility_id):
         temp_list[0] = total_date_list[1000*i]
         temp_list[1] = total_date_list[1000*i+1000-1]
         kmeans_date.append(temp_list)
-
-    k_means = KMeans(n_clusters=6, random_state=10)
-    k_means.fit(kmeans_energy)
+    score = 0
+    cluster = 2
+    for i in range(2,20):
+        k_means = KMeans(n_clusters=i, random_state=10)
+        y_predict = k_means.fit_predict(kmeans_energy)
+        s = silhouette_score(kmeans_energy, y_predict)
+        if(score<s):
+            score = s
+            cluster = i
+    k_means = KMeans(n_clusters=cluster, random_state=10)
+    y_predict = k_means.fit_predict(kmeans_energy)
     center=k_means.cluster_centers_
     labels=k_means.labels_
-    return render(request, 'LineDetection/cluster.html', {'facility_id':facility_id}) 
+    json_cluster = []
+    for i in range(cluster):
+        temp_cluster = {}
+        cluster_name = 'cluster_' + str(i)
+        temp_cluster['name'] = cluster_name
+        temp_cluster['xdata'] = [i for i in range(len(list(center[i])))]
+        temp_cluster['ydata'] = list(center[i])
+        temp_cluster['type'] = 'line'
+        json_cluster.append(temp_cluster)
+    return render(request, 'LineDetection/cluster.html', {'json_cluster':json.dumps(json_cluster),'facility_id':facility_id}) 
