@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=10">
-    <title>运行监测</title>
+    <title>异常统计</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" type="text/css" href="{% static 'LineDetection/bootstrap/css/bootstrap.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'LineDetection/dist/css/ionicons.min.css' %}">
@@ -17,14 +17,14 @@
     <script src="dist/js/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="hold-transition skin-blue sidebar-mini">   
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
     <header class="main-header">
         <a href="#" class="logo">
       <span class="logo-mini">
 	  <img src="{% static 'LineDetection/vince/images/v01.png' %}">
 	  </span>
-           <span class="logo-lg"><img src="{% static 'LineDetection/vince/images/v01.png' %}">汽车制造</span>
+            <span class="logo-lg"><img src="{% static 'LineDetection/vince/images/v01.png' %}">汽车制造</span>
         </a>
         <nav class="navbar navbar-static-top">
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
@@ -51,12 +51,10 @@
                             </li>
                         </ul>
                     </li>
-
                 </ul>
             </div>
         </nav>
     </header>
-
     <aside class="main-sidebar">
         <section class="sidebar">
             <div class="user-panel">
@@ -77,12 +75,12 @@
                         <i class="fa fa-home" style="font-size: 22px"></i> <span>首页</span>
                     </a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="{% url 'LineDetection:monitor_index' %}">
                         <i class="fa fa-eye"></i> <span>异常检测</span>
                     </a>
                 </li>
-                <li>
+                <li class='active'>
                     <a href="{% url 'LineDetection:report' %}">
                         <i class="fa fa-map"></i> <span>能耗报表</span>
                     </a>
@@ -94,75 +92,104 @@
                     </a>
                 </li>
             </ul>
-        </section>
-    </aside>
-    <div class="content-wrapper">
-        <section class="content-header">
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li class="active">运行监测</li>
-            </ol>
-        </section>
-        <div class="content qqq">
-            <div class="yxjc">
-                <div class="yxjc_info">
-                    <ul>
-                        <li class="kong xuanli"><p>一号生产线<span class="yxjc_tubiao1"></span></p></li>
-                        <li class="qi"><p>二号生产线<span class="yxjc_tubiao2"></span></p></li>
-                        <li class="qi"><p>三号生产线<span class="yxjc_tubiao3"></span></p></li>
-                    </ul>
+    </section>
+  </aside>
+  <div class="content-wrapper">
+    <section class="content-header"> 
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li class="active">设备安装</li>
+      </ol>
+    </section>
+    <div class="content qqq">
+    <div class="yjgl">
+                    <div class="ssjc_right_up">
+                    <div class="nei">
+                <div class="ssjc_ru_title">
+                  <span class="left_ten">
+                    查询条件
+                  </span>
+                <div class="clear"></div>
                 </div>
-                <div class="yxjc_info_right">
-                    <img src="{% static 'LineDetection/vince/images/生产线_1.jpg' %}">
+                <div class="sbaz_table">
+                  <p><span>大类：<input type="text"></span>
+                  <span>小类：<input type="text"></span>
+                  <span>能源类型：<input type="text"></span>
+                  <span>能源类型：<input type="text"></span>
+                  <span>设备编号：<input type="text"></span>
+                  <input type="submit" value="重置" class="in_sub">
+                  <input type="submit" value="查询" class="in_sub">
+                  <input type="submit" value="设备安装" class="in_sub">
+                  <input type="submit" value="检索设备安装" class="in_sub">
+                  </p>
                 </div>
+              </div>
+              <div class="ssjc_right_bottom">
+                <div class="nei">
+                    <p>数据列表</p>
+                <div class="ssjc_rub_table">
+<table class="tj_table" border="0">
+  <thead>
+    <tr>
+      <td><input type="checkbox"  class="table_check"></td>
+      <td>设备编号</td>
+      <td>设备大类</td>
+      <td>设备子类</td>
+      <td>能源类型</td>
+      <td>设备批次</td>
+      <td>设备单价</td>
+      <td>采购人</td>
+      <td>设备状态</td>
+    </tr>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><input type="checkbox" class="table_check"></td><td>E107M</td><td>生产</td><td>电表</td><td>电</td><td>20150303001</td><td>2.00</td><td>王浩</td><td>库存</td></tr>
+    <tr><td><input type="checkbox" class="table_check"></td><td>E107M</td><td>生产</td><td>电表</td><td>电</td><td>20150303001</td><td>2.00</td><td>王浩</td><td>库存</td></tr>
+    <tr><td><input type="checkbox" class="table_check"></td><td>E107M</td><td>生产</td><td>电表</td><td>电</td><td>20150303001</td><td>2.00</td><td>王浩</td><td>库存</td></tr>
+    <tr><td><input type="checkbox" class="table_check"></td><td>E107M</td><td>生产</td><td>电表</td><td>电</td><td>20150303001</td><td>2.00</td><td>王浩</td><td>库存</td></tr>
+    <tr><td><input type="checkbox" class="table_check"></td><td>E107M</td><td>生产</td><td>电表</td><td>电</td><td>20150303001</td><td>2.00</td><td>王浩</td><td>库存</td></tr>
+    <tr><td><input type="checkbox" class="table_check"></td><td>E107M</td><td>生产</td><td>电表</td><td>电</td><td>20150303001</td><td>2.00</td><td>王浩</td><td>库存</td></tr>
+    <tr><td><input type="checkbox" class="table_check"></td><td>E107M</td><td>生产</td><td>电表</td><td>电</td><td>20150303001</td><td>2.00</td><td>王浩</td><td>库存</td></tr>
+    <tr><td><input type="checkbox" class="table_check"></td><td>E107M</td><td>生产</td><td>电表</td><td>电</td><td>20150303001</td><td>2.00</td><td>王浩</td><td>库存</td></tr>
+    <tr><td><input type="checkbox" class="table_check"></td><td>E107M</td><td>生产</td><td>电表</td><td>电</td><td>20150303001</td><td>2.00</td><td>王浩</td><td>库存</td></tr>
 
-                <div class="yxjc_info_right">
-                    {% if facility_list %}
-                        {% for facility in facility_list %}
-                            <div class="col-lg-2 yxjc_info_facility">
-                                {% if facility.anomaly_type %}
-                                <div class="yxpjxg_three">
-                                    <p>异常</p>
-                                </div>
-                                <p><span>工艺:    </span>{{ facility.facility_name }}</p>
-                                <p><span>用电量：</span>{{ facility.total_energy }}KW·h</p>
-                                <p><span>发生时间： </span>{{ facility.anomaly_date }}</p>
-                                <p><span>异常种类：</span>{{ facility.anomaly_type }}</p>
-                                <p><span>判断原因：</span>{{ facility.anomaly_comments }}</p>
-                                <a href="{% url 'LineDetection:monitor' facility.id %}">
-                                    <button type="button" class="btn btn-success">查看</button>
-                                </a>
-                                {% else %}
-                                <div class="yxpjxg_two">
-                                    <p>正常</p>
-                                </div>
-                                <p><span>工艺:    </span>{{ facility.facility_name }}</p>
-                                <p><span>用电量：</span>{{ facility.total_energy }}KW·h</p>
-                                <p><span>生产线：</span>{{ facility.production_line }}</p>
-                                <p><span>安装时间： </span>{{ facility.install_date }}</p>
-                                <p><span>品牌：</span>{{ facility.brand }}</p>
-                                <a href="{% url 'LineDetection:monitor' facility.id %}">
-                                        <button type="button" class="btn btn-success">查看</button>
-                                </a>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                        <p>No facilities are available.</p>
-                    {% endif %}
+    <tr class="gao xian"></tr><tr class="gao xian"></tr><tr class="gao xian"></tr><tr class="gao xian"></tr><tr class="gao xian"></tr><tr class="gao xian"></tr>
+    <tr class="gao xian"></tr>
+  </tbody>
+
+</table>
+  <div class="t_fanye">
+    <span class="upten"></span>
+    <span class="up"></span>
+    <span class="split"></span>
+    <span class="page_info_one">第 1 / 1 页</span>
+    <span class="split"></span>
+    <span class="dowm"></span>
+    <span class="downten"></span>
+    <span class="page_info_two">页记录数 15</span>
+    <span class="page_info_three">当前1-1条记录，共1条记录</span>
+    <div class="clear"></div>
+  </div>
+                    
+                </div><div class="cheng_ershi"></div>
                 </div>
-                
                 </div>
-            </div>
-        </div>
+              
+              </div>
+         
+          
+                      </div>
+      </div>
     </div>
-    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            <b></b>
-        </div>
-        <strong>Copyright &copy; All Rights Reserved powered by Shanyue</strong>
-    </footer>
-    <div class="control-sidebar-bg"></div>
+
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b></b>
+    </div>
+   <strong>Copyright &copy; All Rights Reserved powered by Shanyue</strong>
+  </footer>
+  <div class="control-sidebar-bg"></div>
 </div>
 <script src="{% static 'LineDetection/vince/js/jquery-2.2.3.min.js' %}"></script>
 <script src="{% static 'LineDetection/vince/global.js' %}"></script>
@@ -171,17 +198,15 @@
 <script src="{% static 'LineDetection/dist/js/demo.js' %}"></script>
 <script src="{% static 'LineDetection/vince/js/nicescroll.js' %}"></script>
 <script src="{% static 'LineDetection/vince/js/demo.js' %}"></script>
+<script src="{% static 'LineDetection/vince/datapick/js/moment.js' %}"></script>
+<script src="{% static 'LineDetection/vince/js/echarts.min.js' %}"></script>
 <div id="sss" style="display:none;height:200px;width:200px;"></div>
 <script src="{% static 'LineDetection/vince/js/echarts.min.js' %}"></script>
 <script type="text/javascript">
-    import * as echarts from "{% static 'LineDetection/vince/js/jquery' %}";
-
-    const myChart1 = echarts.init(document.getElementById('sss'));
-    option1 = {
-        series: [{data: [247, 179]}]
-    };
-    myChart1.setOption(option1);
+var myChart1 = echarts.init(document.getElementById('sss'));
+option1 = {
+series: [{data: [247, 179]}]};
+myChart1.setOption(option1);
 </script>
-
 </body>
 </html>

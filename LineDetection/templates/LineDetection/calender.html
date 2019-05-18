@@ -28,7 +28,7 @@
         </a>
         <nav class="navbar navbar-static-top">
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
-            <span class="all_title">基于物联网的汽车制造企业能耗管理云平台</span>
+            <span class="all_title">汽车涂装工艺能耗异常检测系统</span>
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <li class="dropdown user user-menu">
@@ -70,63 +70,24 @@
             <ul class="sidebar-menu">
                 <li class="header">菜单 MENU</li>
                 <li>
-                    <a href="index.html">
+                    <a href="{% url 'LineDetection:index' %}">
                         <i class="fa fa-home" style="font-size: 22px"></i> <span>首页</span>
                     </a>
                 </li>
                 <li class="active">
-                    <a href="ssjc.html">
-                        <i class="fa fa-eye"></i> <span>实时监测</span>
+                    <a href="{% url 'LineDetection:monitor_index' %}">
+                        <i class="fa fa-eye"></i> <span>异常检测</span>
                     </a>
                 </li>
                 <li>
-                    <a href="yxjc.html">
-                        <i class="fa fa-print"></i> <span>运行监测</span>
+                    <a href="{% url 'LineDetection:report' %}">
+                        <i class="fa fa-map"></i> <span>能耗报表</span>
                     </a>
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-sliders"></i>
-                        <span>负荷响应</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="xyxgpj.html"><i class="fa fa-bookmark"></i> 响应效果评价</a></li>
-                        <li><a href="fhxyfx.html"><i class="fa fa-bookmark"></i> 负荷响应分析</a></li>
-                        <li><a href="xyfagl.html"><i class="fa fa-bookmark"></i> 响应方案管理</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="yjgl.html">
-                        <i class="fa fa-bell"></i> <span>预警管理</span>
-                    </a>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-gears"></i>
-                        <span>设备管理</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="sbrk.html"><i class="fa fa-bookmark"></i> 设备入库</a></li>
-                        <li><a href="sbaz.html"><i class="fa fa-bookmark"></i> 设备安装</a></li>
-                        <li><a href="sbjx.html"><i class="fa fa-bookmark"></i> 设备检修</a></li>
-                        <li><a href="sbbf.html"><i class="fa fa-bookmark"></i> 设备报废</a></li>
-                        <li><a href="sbcx.html"><i class="fa fa-bookmark"></i> 设备查询</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="kzcl.html">
-                        <i class="fa fa-magnet"></i> <span>控制策略</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="xtjc.html">
-                        <i class="fa fa-map"></i> <span>系统集成</span>
+                        <i class="fa fa-print"></i>
+                        <span>异常检测分享博客</span>
                     </a>
                 </li>
             </ul>
@@ -292,7 +253,7 @@
         <div class="pull-right hidden-xs">
             <b></b>
         </div>
-        <strong>Copyright &copy; 2014-2019 powersolver.com All Rights Reserved powered by Shanyue</strong>
+        <strong>Copyright &copy; All Rights Reserved powered by Shanyue</strong>
     </footer>
     <div class="control-sidebar-bg"></div>
 </div>

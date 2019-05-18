@@ -25,6 +25,8 @@ class Anomaly(models.Model):
     anomaly_date = models.DateTimeField('energy date')
     anomaly_type = models.IntegerField(default=0)
     anomaly_comments = models.CharField(max_length=200)
+    anomaly_solve = models.IntegerField(default=0)
+    solved_comments = models.CharField(max_length=200, default = '', null = True)
     objects = DataFrameManager()
 
 class season_goal(models.Model):

@@ -17,7 +17,7 @@ from sklearn.metrics import silhouette_score, silhouette_samples
 # Create your views here.
 
 class IndexView(generic.ListView):
-    template_name = 'LineDetection/yxjc.html'
+    template_name = 'LineDetection/index.html'
     context_object_name = 'facility_list'
 
     def get_queryset(self):
@@ -32,6 +32,16 @@ class IndexView(generic.ListView):
         sql_query = sql_query.replace('\n',' ')
         queryset = Anomaly.objects.raw(sql_query)
         return queryset
+
+def monitor_index(request):
+    sql = open('SQL/index.sql', 'r')
+    sql_query = sql.read()
+    sql_query = sql_query.replace('\n',' ')
+    queryset = Anomaly.objects.raw(sql_query)
+    return render(request, 'LineDetection/yxjc.html', {'facility_list': queryset})
+
+def report(request):
+    return render(request, 'LineDetection/report.html')
 
 def monitor(request, facility_id):
     sql = open('SQL/monitor.sql', 'r')
@@ -169,3 +179,48 @@ def cluster(request, facility_id):
 
 def calender(request, facility_id):
     return render(request, 'LineDetection/calender.html', {'facility_id':facility_id})
+
+def cluster_superuser(request, facility_id):
+    total_energy = pd.read_csv('total_energy.csv')
+    total_energy_list = total_energy['energy'].tolist()
+    total_date_list = total_energy['energy_date'].tolist()
+    kmeans_energy = []
+    kmeans_date = []
+    for i in range(200):
+        temp_list = total_energy_list[1000*i:1000*i+1000]
+        kmeans_energy.append(temp_list)
+    for i in range(200):
+        temp_list = [0,0]
+        temp_list[0] = total_date_list[1000*i]
+        temp_list[1] = total_date_list[1000*i+1000-1]
+        kmeans_date.append(temp_list)
+    score = 0
+    cluster = 2
+    score_list = {}
+    score_list['xdata'] = [i for i in range(2,20)]
+    score_list['ydata'] = []
+    for i in range(2,20):
+        k_means = KMeans(n_clusters=i, random_state=10)
+        y_predict = k_means.fit_predict(kmeans_energy)
+        s = silhouette_score(kmeans_energy, y_predict)
+        score_list['ydata'].append(s)
+        if(score<s):
+            score = s
+            cluster = i
+    k_means = KMeans(n_clusters=cluster, random_state=10)
+    y_predict = k_means.fit_predict(kmeans_energy)
+    center=k_means.cluster_centers_
+    labels=k_means.labels_
+    json_cluster = []
+    for i in range(cluster):
+        temp_cluster = {}
+        cluster_name = 'cluster_' + str(i)
+        temp_cluster['name'] = cluster_name
+        temp_cluster['xdata'] = [i for i in range(len(list(center[i])))]
+        temp_cluster['ydata'] = list(center[i])
+        temp_cluster['type'] = 'line'
+        json_cluster.append(temp_cluster)
+    
+    cluster_info = Cluster.objects.all()
+    return render(request, 'LineDetection/cluster_superuser.html', {'json_cluster':json.dumps(json_cluster),'facility_id':facility_id,\
+                                                           'cluster_info':cluster_info,'score_list':score_list})
