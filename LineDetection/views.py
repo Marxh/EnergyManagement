@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from itertools import chain
-from .models import Facility, Energy, Anomaly,Cluster, season_goal, production_amount
+from .models import Facility, Energy, Anomaly, Cluster, season_goal, production_amount
 from .utils import *
 import pandas as pd
 import json
@@ -223,4 +223,14 @@ def cluster_superuser(request, facility_id):
     
     cluster_info = Cluster.objects.all()
     return render(request, 'LineDetection/cluster_superuser.html', {'json_cluster':json.dumps(json_cluster),'facility_id':facility_id,\
-                                                           'cluster_info':cluster_info,'score_list':score_list})
+                                                           'cluster_info':cluster_info,'score_list':score_list,'cluster_number':len(center)})
+
+def setcluster(request, facility_id, cluster_number):
+    comments_list = []
+    if request.method=="POST":
+        for i in range(1, cluster_number+1):
+            input_name = 'anomaly_' + str(i)
+            anomaly_comment=request.POST.get(input_name,None)
+            if(anomaly_comment):
+                cluster_obj = Cluster.objects.filter(cluster_id = i).update(anomaly_condition = 1, anomaly_comments = anomaly_comment)
+    return HttpResponseRedirect(reverse('LineDetection:cluster', args=(facility_id,)))

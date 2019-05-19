@@ -179,55 +179,63 @@
                                     <div class="xyxgpj_echarts">
                                             <br>
                                             <p style="color:white">异常原因设置</p>
-                                            <div class="ssjc_rub_table">
-                                                <table class="tj_table" border="0">
-                                                    <thead>
-                                                    <tr>
-                                                        <td>聚类簇</td>
-                                                        <td style = 'text-align: center'>是否异常</td>
-                                                        <td>异常原因</td>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    {% if cluster_info %} 
-                                                        {% for cluster in cluster_info %}
-                                                            <tr>
-                                                                <td>{{ cluster.cluster_id }}</td>
-                                                                <td>
-                                                                    <input type="checkbox">是否异常</input>
-                                                                </td>
-                                                                <td style = 'text-align: center'>
-                                                                    <div class="input-group input-group-sm">
-                                                                        <span class="input-group-addon">*</span>
-                                                                        <input type="text" class="form-control" placeholder="异常信息   ">
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        {% endfor %}
-                                                    {% else %}
+                                            <form action="{% url 'LineDetection:setcluster' facility_id cluster_number %}" method="post">
+                                                {% csrf_token %}
+                                                <div class="ssjc_rub_table">
+                                                    
+                                                    <table class="tj_table" border="0">
+                                                        <thead>
                                                         <tr>
-                                                            <td>暂无异常</td>
-                                                            <td>暂无异常</td>
-                                                            <td>暂无异常</td>
-                                                            <td>暂无异常</td>
+                                                            <td>聚类簇</td>
+                                                            <td style = 'text-align: center'>是否异常</td>
+                                                            <td>异常原因</td>
                                                         </tr>
-                                                    {% endif %}
-                                                    </tbody>
-                                                </table>
-                                                <div class="t_fanye">
-                                                    <span class="upten"></span>
-                                                    <span class="up"></span>
-                                                    <span class="split"></span>
-                                                    <span class="page_info_one">第 1 / 1 页</span>
-                                                    <span class="split"></span>
-                                                    <span class="dowm"></span>
-                                                    <span class="downten"></span>
-                                                    <span class="page_info_two">页记录数 1</span>
-                                                    <span class="page_info_three">当前1-1条记录，共1条记录</span>
-                                                    <div class="clear"></div>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% if cluster_info %} 
+                                                            {% for cluster in cluster_info %}
+                                                                <tr>
+                                                                    <td>{{ cluster.cluster_id }}</td>
+                                                                    <td>
+                                                                        <input type="checkbox">是否异常</input>
+                                                                    </td>
+                                                                    <td style = 'text-align: center'>
+                                                                        <div class="input-group input-group-sm">
+                                                                            <span class="input-group-addon">*</span>
+                                                                            <input type="text" name="anomaly_{{ forloop.counter }}" class="form-control" placeholder="异常信息">
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            <tr>
+                                                                <td>暂无异常</td>
+                                                                <td>暂无异常</td>
+                                                                <td>暂无异常</td>
+                                                                <td>暂无异常</td>
+                                                            </tr>
+                                                        {% endif %}
+                                                        </tbody>
+                                                    </table>
+                                                
+                                            
+                                            
+                                                    <div class="t_fanye">
+                                                        <span class="upten"></span>
+                                                        <span class="up"></span>
+                                                        <span class="split"></span>
+                                                        <span class="page_info_one">第 1 / 1 页</span>
+                                                        <span class="split"></span>
+                                                        <span class="dowm"></span>
+                                                        <span class="downten"></span>
+                                                        <span class="page_info_two">页记录数 1</span>
+                                                        <span class="page_info_three">当前1-1条记录，共1条记录</span>
+                                                        <div class="clear"></div>
+                                                    </div>  
                                                 </div>
-                                            </div>
-                                    </div>
+                                                <input type="submit" class='btn btn-info'style='display:block;margin-left:auto;margin-right:auto;'></input>
+                                            </form>
+                                        </div>
                                     <div class="ershi"></div>
                                 </div>
                             </div>

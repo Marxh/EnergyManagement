@@ -12,6 +12,7 @@ urlpatterns = [
     path('cluster/<int:facility_id>/',views.cluster, name='cluster'),
     path('cluster_superuser/<int:facility_id>/',views.cluster_superuser, name='cluster_superuser'),
     path('calender/<int:facility_id>/',views.calender, name='calender'),
+    path('setcluster/<int:facility_id>/<int:cluster_number>/',views.setcluster, name='setcluster'),
 #    path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
 #    path('<int:question_id>/vote/', views.vote, name='vote'),
 ]
