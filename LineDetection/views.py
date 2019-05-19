@@ -224,7 +224,6 @@ def cluster_superuser(request, facility_id):
     cluster_info = Cluster.objects.all()
     return render(request, 'LineDetection/cluster_superuser.html', {'json_cluster':json.dumps(json_cluster),'facility_id':facility_id,\
                                                            'cluster_info':cluster_info,'score_list':score_list,'cluster_number':len(center)})
-
 def setcluster(request, facility_id, cluster_number):
     comments_list = []
     if request.method=="POST":
