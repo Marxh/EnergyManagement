@@ -70,17 +70,17 @@
             <ul class="sidebar-menu">
                 <li class="header">菜单 MENU</li>
                 <li class="active">
-                    <a href="{% url 'LineDetection:index' %}">
+                    <a href="{% url 'LineDetection:index' character %}">
                         <i class="fa fa-home" style="font-size: 22px"></i> <span>首页</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'LineDetection:monitor_index' %}">
+                    <a href="{% url 'LineDetection:monitor_index' character %}">
                         <i class="fa fa-eye"></i> <span>异常检测</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'LineDetection:report' %}">
+                    <a href="{% url 'LineDetection:report' character %}">
                         <i class="fa fa-map"></i> <span>能耗报表</span>
                     </a>
                 </li>

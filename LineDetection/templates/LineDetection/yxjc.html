@@ -73,17 +73,17 @@
             <ul class="sidebar-menu">
                 <li class="header">菜单 MENU</li>
                 <li>
-                    <a href="{% url 'LineDetection:index' %}">
+                    <a href="{% url 'LineDetection:index' character %}">
                         <i class="fa fa-home" style="font-size: 22px"></i> <span>首页</span>
                     </a>
                 </li>
                 <li class="active">
-                    <a href="{% url 'LineDetection:monitor_index' %}">
+                    <a href="{% url 'LineDetection:monitor_index' character %}">
                         <i class="fa fa-eye"></i> <span>异常检测</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'LineDetection:report' %}">
+                    <a href="{% url 'LineDetection:report' character %}">
                         <i class="fa fa-map"></i> <span>能耗报表</span>
                     </a>
                 </li>
@@ -129,7 +129,7 @@
                                 <p><span>发生时间： </span>{{ facility.anomaly_date }}</p>
                                 <p><span>异常种类：</span>{{ facility.anomaly_type }}</p>
                                 <p><span>判断原因：</span>{{ facility.anomaly_comments }}</p>
-                                <a href="{% url 'LineDetection:monitor' facility.id %}">
+                                <a href="{% url 'LineDetection:monitor' facility.id character %}">
                                     <button type="button" class="btn btn-success">查看</button>
                                 </a>
                                 {% else %}
@@ -141,7 +141,7 @@
                                 <p><span>生产线：</span>{{ facility.production_line }}</p>
                                 <p><span>安装时间： </span>{{ facility.install_date }}</p>
                                 <p><span>品牌：</span>{{ facility.brand }}</p>
-                                <a href="{% url 'LineDetection:monitor' facility.id %}">
+                                <a href="{% url 'LineDetection:monitor' facility.id character %}">
                                         <button type="button" class="btn btn-success">查看</button>
                                 </a>
                                 {% endif %}

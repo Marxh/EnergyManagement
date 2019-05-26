@@ -16,34 +16,36 @@ from sklearn.metrics import silhouette_score, silhouette_samples
 
 # Create your views here.
 
-class IndexView(generic.ListView):
-    template_name = 'LineDetection/index.html'
-    context_object_name = 'facility_list'
+def login_index(request):
+    return render(request, 'LineDetection/login.html')
 
-    def get_queryset(self):
-        """
-        Return the last five published questions (not including those set to be
-        published in the future).
-        """
-        #acility_list = Facility.objects.all()
-        #anomaly_list = Anomaly.objects.all()
-        sql = open('SQL/index.sql', 'r')
-        sql_query = sql.read()
-        sql_query = sql_query.replace('\n',' ')
-        queryset = Anomaly.objects.raw(sql_query)
-        return queryset
+def login_action(request):
+    if request.method=="GET":
+        account=request.GET.get('account',None)
+        password=request.GET.get('password',None)
+        character=request.GET.get('character',None)
+    if(character=='能耗分析人员'):
+        character_num = 0
+    elif(character=='普通用户'):
+        character_num = 1
+    else:
+        character_num = 2
+    return HttpResponseRedirect(reverse('LineDetection:index', args=(character_num,)))
 
-def monitor_index(request):
+def index(request,character):
+    return render(request, 'LineDetection/index.html', {'character': character})
+
+def monitor_index(request,character):
     sql = open('SQL/index.sql', 'r')
     sql_query = sql.read()
     sql_query = sql_query.replace('\n',' ')
     queryset = Anomaly.objects.raw(sql_query)
-    return render(request, 'LineDetection/yxjc.html', {'facility_list': queryset})
+    return render(request, 'LineDetection/yxjc.html', {'facility_list': queryset,'character':character})
 
-def report(request):
-    return render(request, 'LineDetection/report.html')
+def report(request,character):
+    return render(request, 'LineDetection/report.html',{'character':character})
 
-def monitor(request, facility_id):
+def monitor(request, facility_id, character):
     sql = open('SQL/monitor.sql', 'r')
     sql_query = sql.read()
     sql_query = sql_query.replace('\n',' ').replace('###', str(facility_id))
@@ -69,9 +71,9 @@ def monitor(request, facility_id):
     energy_limit = energy_limit.to_dataframe()['energy_total'].tolist()[0]
     return render(request, 'LineDetection/monitor.html', \
         {'energy_list': queryset, 'five_day_energy': five_day_energy_json, 'facility_id': facility_id, \
-            'latest_energy': round(five_day_energy_group['energy'].tolist()[-1],0), 'energy_limit': energy_limit})
+            'latest_energy': round(five_day_energy_group['energy'].tolist()[-1],0), 'energy_limit': energy_limit,'character':character})
 
-def statistics(request, facility_id):
+def statistics(request, facility_id,character):
     production = production_amount.objects.all().to_dataframe()
     production['season_id'] = production['season'].str[-2]
     production['season_id'] = production['season_id'].astype(int)
@@ -131,9 +133,9 @@ def statistics(request, facility_id):
     }]
     return render(request, 'LineDetection/statistics.html', {'prod':prod_json,'time': time_json,'facility_id': facility_id, 'anomaly_bar': anomaly_bar_json,\
                   'anomaly_pie': anomaly_pie_json,'goal':goal, 'done_amount':done_amount, 'total_time':total_time,'passed_time':passed_time,\
-                  'left_amount':left_amount}) 
+                  'left_amount':left_amount,'character':character}) 
 
-def cluster(request, facility_id):
+def cluster(request, facility_id,character):
     #total_energy = Energy.objects.filter(facility_id = facility_id)
     #total_energy = Energy.objects.values('energy','energy_date').all()
     #total_energy = total_energy.to_dataframe()
@@ -175,12 +177,12 @@ def cluster(request, facility_id):
     
     cluster_info = Cluster.objects.all()
     return render(request, 'LineDetection/cluster.html', {'json_cluster':json.dumps(json_cluster),'facility_id':facility_id,\
-                                                           'cluster_info':cluster_info})
+                                                           'cluster_info':cluster_info,'character':character})
 
-def calender(request, facility_id):
-    return render(request, 'LineDetection/calender.html', {'facility_id':facility_id})
+def calender(request, facility_id,character):
+    return render(request, 'LineDetection/calender.html', {'facility_id':facility_id,'character':character})
 
-def cluster_superuser(request, facility_id):
+def cluster_superuser(request, facility_id,character):
     total_energy = pd.read_csv('total_energy.csv')
     total_energy_list = total_energy['energy'].tolist()
     total_date_list = total_energy['energy_date'].tolist()
@@ -223,8 +225,9 @@ def cluster_superuser(request, facility_id):
     
     cluster_info = Cluster.objects.all()
     return render(request, 'LineDetection/cluster_superuser.html', {'json_cluster':json.dumps(json_cluster),'facility_id':facility_id,\
-                                                           'cluster_info':cluster_info,'score_list':score_list,'cluster_number':len(center)})
-def setcluster(request, facility_id, cluster_number):
+                                                           'cluster_info':cluster_info,'score_list':score_list,'cluster_number':len(center),'character':character})
+
+def setcluster(request, facility_id, cluster_number,character):
     comments_list = []
     if request.method=="POST":
         for i in range(1, cluster_number+1):
@@ -232,4 +235,53 @@ def setcluster(request, facility_id, cluster_number):
             anomaly_comment=request.POST.get(input_name,None)
             if(anomaly_comment):
                 cluster_obj = Cluster.objects.filter(cluster_id = i).update(anomaly_condition = 1, anomaly_comments = anomaly_comment)
-    return HttpResponseRedirect(reverse('LineDetection:cluster', args=(facility_id,)))
+            else:
+                cluster_obj = Cluster.objects.filter(cluster_id = i).update(anomaly_condition = 0, anomaly_comments = '')
+    return HttpResponseRedirect(reverse('LineDetection:cluster', args=(facility_id,character,)))
+
+def exclude_anomaly(request, facility_id,character):
+    #total_energy = Energy.objects.filter(facility_id = facility_id)
+    #total_energy = Energy.objects.values('energy','energy_date').all()
+    #total_energy = total_energy.to_dataframe()
+    total_energy = pd.read_csv('total_energy.csv')
+    total_energy_list = total_energy['energy'].tolist()
+    total_date_list = total_energy['energy_date'].tolist()
+    kmeans_energy = []
+    kmeans_date = []
+    for i in range(200):
+        temp_list = total_energy_list[1000*i:1000*i+1000]
+        kmeans_energy.append(temp_list)
+    for i in range(200):
+        temp_list = [0,0]
+        temp_list[0] = total_date_list[1000*i]
+        temp_list[1] = total_date_list[1000*i+1000-1]
+        kmeans_date.append(temp_list)
+    score = 0
+    cluster = 2
+    for i in range(2,20):
+        k_means = KMeans(n_clusters=i, random_state=10)
+        y_predict = k_means.fit_predict(kmeans_energy)
+        s = silhouette_score(kmeans_energy, y_predict)
+        if(score<s):
+            score = s
+            cluster = i
+    k_means = KMeans(n_clusters=cluster, random_state=10)
+    y_predict = k_means.fit_predict(kmeans_energy)
+    center=k_means.cluster_centers_
+    labels=k_means.labels_
+    json_cluster = []
+    for i in range(cluster):
+        temp_cluster = {}
+        cluster_name = 'cluster_' + str(i)
+        temp_cluster['name'] = cluster_name
+        temp_cluster['xdata'] = [i for i in range(len(list(center[i])))]
+        temp_cluster['ydata'] = list(center[i])
+        temp_cluster['type'] = 'line'
+        json_cluster.append(temp_cluster)
+    
+    cluster_info = Cluster.objects.all()
+    
+    anomaly = Anomaly.objects.filter(facility_id = facility_id, solved_comments = '')
+
+    return render(request, 'LineDetection/exclude_anomaly.html', {'json_cluster':json.dumps(json_cluster),'facility_id':facility_id,\
+                                                           'cluster_info':cluster_info, 'anomaly_list':anomaly,'character':character})

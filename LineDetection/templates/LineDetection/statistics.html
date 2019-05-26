@@ -71,17 +71,17 @@
             <ul class="sidebar-menu">
                 <li class="header">菜单 MENU</li>
                 <li>
-                    <a href="{% url 'LineDetection:index' %}">
+                    <a href="{% url 'LineDetection:index' character %}">
                         <i class="fa fa-home" style="font-size: 22px"></i> <span>首页</span>
                     </a>
                 </li>
                 <li class="active">
-                    <a href="{% url 'LineDetection:monitor_index' %}">
+                    <a href="{% url 'LineDetection:monitor_index' character %}">
                         <i class="fa fa-eye"></i> <span>异常检测</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'LineDetection:report' %}">
+                    <a href="{% url 'LineDetection:report' character %}">
                         <i class="fa fa-map"></i> <span>能耗报表</span>
                     </a>
                 </li>
@@ -123,22 +123,36 @@
                                         <ul>
                                             <li>
                                                 <span><i class="icon-folder-open"></i>
-                                                    <a href = "{% url 'LineDetection:monitor' facility_id %}">能耗监控</a>
+                                                    <a href = "{% url 'LineDetection:monitor' facility_id character%}">能耗监控</a>
+                                                </span>
+                                            </li>
+                                            {% if character == 0 %}
+                                                <li>
+                                                    <span><i class="icon-folder-open"></i>
+                                                        <a href = "{% url 'LineDetection:cluster_superuser' facility_id character %}">聚类设置</a>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span><i class="icon-folder-open"></i>
+                                                        <a href =  "{% url 'LineDetection:cluster' facility_id character %}">聚类结果</a>
+                                                    </span>
+                                                </li>
+                                            {% endif %}
+                                            {% if character == 2 %}
+                                                <li>
+                                                    <span><i class="icon-folder-open"></i>
+                                                        <a href = "{% url 'LineDetection:exclude_anomaly' facility_id character %}">异常排查</a>
+                                                    </span>
+                                                </li>
+                                            {% endif %}
+                                            <li>
+                                                <span><i class="icon-folder-open"></i>
+                                                    <a href = "{% url 'LineDetection:calender' facility_id character %}">异常日历</a>
                                                 </span>
                                             </li>
                                             <li>
                                                 <span><i class="icon-folder-open"></i>
-                                                    <a href = "{% url 'LineDetection:calender' facility_id %}">异常日历</a>
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span><i class="icon-folder-open"></i>
-                                                    <a href =  "{% url 'LineDetection:cluster' facility_id %}">聚类结果</a>
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span><i class="icon-folder-open"></i>
-                                                    <a href = "{% url 'LineDetection:statistics' facility_id %}">异常统计</a>
+                                                    <a href = "{% url 'LineDetection:statistics' facility_id character %}">异常统计</a>
                                                 </span>
                                             </li>
                                         </ul>

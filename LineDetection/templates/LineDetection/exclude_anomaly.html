@@ -172,94 +172,111 @@
                     </div>
 
                     <div class="col-md-10 ssjc_right">
-
                         <div class="ssjc_right_up">
-                            <div class="nei">  
-                                <div class="ssjc_ru_title">
-          				<span>
-          				曲线类型：
-          					<select class="biaoti_select">
-							  <option value="折线图">折线图</option>
-							  <option value="柱状图">柱状图</option>
-							</select>
-          				</span>
-                                    <span class="tiaoshijian">
-                    开始时间：
-                    <input type="text" class="shi" id="xuanshi1" readonly value="2017-10-11">
-                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                    <span class="tiaoshijian">
-                    结束时间：
-                    <input type="text" class="shi" id="xuanshi2" readonly value="2017-10-12">
-                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                    <span class="float_right">
-                    <input type="submit" value="查询" class="youcecha">
-                  </span>
-                  
-
-
-                                    <div class="clear"></div>
-                                </div>
-                                <div class="ssjc_ru_table">
-                                    <div class="echarts_ssjc" id="echarts_ssjc_one">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="nei">  
-                                <div class="ssjc_ru_table">
-                                    <div class="echarts_ssjc" id="echarts_ssjc_two">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ssjc_right_bottom">
-                                <div class="nei">
-                                    <p>聚类标注</p>
-                                    <div class="ssjc_rub_table">
-                                        <table class="tj_table" border="0">
-                                            <thead>
-                                            <tr>
-                                                <td>聚类簇</td>
-                                                <td style = 'text-align: center'>是否异常</td>
-                                                <td>异常原因</td>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {% if cluster_info %} 
-                                                {% for cluster in cluster_info %}
-                                                    <tr>
-                                                        <td>{{ cluster.cluster_id }}</td>
-                                                        {% if cluster.anomaly_condition == 1 %}
-                                                            <td style = 'text-align: center'><img src="{% static 'LineDetection/vince/images/cry.png' %}"></img></td>
-                                                        {% else %}
-                                                            <td style = 'text-align: center'><img src="{% static 'LineDetection/vince/images/smile.png' %}"></img></td>
-                                                        {% endif %}
-                                                        <td>{{ cluster.anomaly_comments }}</td>
-                                                    </tr>
-                                                {% endfor %}
-                                            {% else %}
+                            <div class="nei">
+                                <p>未排查异常</p>
+                                <div class="ssjc_rub_table">
+                                    <table class="tj_table" border="0">
+                                        <thead>
+                                        <tr>
+                                            <td>异常ID</td>
+                                            <td>异常时间</td>
+                                            <td>聚类簇</td>
+                                            <td>提交博客</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% if anomaly_list %} 
+                                            {% for anomaly in anomaly_list %}
                                                 <tr>
-                                                    <td>暂无异常</td>
-                                                    <td>暂无异常</td>
-                                                    <td>暂无异常</td>
-                                                    <td>暂无异常</td>
+                                                    <td>{{ anomaly.id }}</td>
+                                                    <td>{{ anomaly.anomaly_date }}</td>
+                                                    <td>{{ anomaly.anomaly_type }}</td>
+                                                    <td> <input type="submit" class='btn btn-info'></input></td>
                                                 </tr>
-                                            {% endif %}
-                                            </tbody>
-                                        </table>
-                                        <div class="t_fanye">
-                                            <span class="upten"></span>
-                                            <span class="up"></span>
-                                            <span class="split"></span>
-                                            <span class="page_info_one">第 1 / 1 页</span>
-                                            <span class="split"></span>
-                                            <span class="dowm"></span>
-                                            <span class="downten"></span>
-                                            <span class="page_info_two">页记录数 1</span>
-                                            <span class="page_info_three">当前1-1条记录，共1条记录</span>
-                                            <div class="clear"></div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <tr>
+                                                <td>暂无异常</td>
+                                                <td>暂无异常</td>
+                                                <td>暂无异常</td>
+                                                <td>暂无异常</td>
+                                            </tr>
+                                        {% endif %}
+                                        </tbody>
+                                    </table>
+                                    <div class="t_fanye">
+                                        <span class="upten"></span>
+                                        <span class="up"></span>
+                                        <span class="split"></span>
+                                        <span class="page_info_one">第 1 / 1 页</span>
+                                        <span class="split"></span>
+                                        <span class="dowm"></span>
+                                        <span class="downten"></span>
+                                        <span class="page_info_two">页记录数 1</span>
+                                        <span class="page_info_three">当前1-1条记录，共1条记录</span>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                                <div class="cheng_ershi"></div>
+                            </div>
+                        </div>
+                            
+                            <div class="ssjc_right_bottom">
+                                    <div class="nei">
+                                        <p>聚类标注</p>
+                                        <div class="ssjc_rub_table">
+                                            <table class="tj_table" border="0">
+                                                <thead>
+                                                <tr>
+                                                    <td>聚类簇</td>
+                                                    <td style = 'text-align: center'>是否异常</td>
+                                                    <td>异常原因</td>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% if cluster_info %} 
+                                                    {% for cluster in cluster_info %}
+                                                        <tr>
+                                                            <td>{{ cluster.cluster_id }}</td>
+                                                            {% if cluster.anomaly_condition == 1 %}
+                                                                <td style = 'text-align: center'><img src="{% static 'LineDetection/vince/images/cry.png' %}"></img></td>
+                                                            {% else %}
+                                                                <td style = 'text-align: center'><img src="{% static 'LineDetection/vince/images/smile.png' %}"></img></td>
+                                                            {% endif %}
+                                                            <td>{{ cluster.anomaly_comments }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <tr>
+                                                        <td>暂无异常</td>
+                                                        <td>暂无异常</td>
+                                                        <td>暂无异常</td>
+                                                        <td>暂无异常</td>
+                                                    </tr>
+                                                {% endif %}
+                                                </tbody>
+                                            </table>
+                                            <div class="t_fanye">
+                                                <span class="upten"></span>
+                                                <span class="up"></span>
+                                                <span class="split"></span>
+                                                <span class="page_info_one">第 1 / 1 页</span>
+                                                <span class="split"></span>
+                                                <span class="dowm"></span>
+                                                <span class="downten"></span>
+                                                <span class="page_info_two">页记录数 1</span>
+                                                <span class="page_info_three">当前1-1条记录，共1条记录</span>
+                                                <div class="clear"></div>
+                                            </div>
+                                        </div>
+                                        <div class="cheng_ershi"></div>
+                                    </div>
+                                <div class="nei">  
+                                    <div class="ssjc_ru_table">
+                                        <div class="echarts_ssjc" id="echarts_ssjc_one">
                                         </div>
                                     </div>
-                                    <div class="cheng_ershi"></div>
                                 </div>
                             </div>
                         </div>
@@ -300,130 +317,8 @@
 
     /* 第一个图 */
     var myChart1 = echarts.init(document.getElementById('echarts_ssjc_one'));
-    var N_POINT = 20;
-    var grids = [];
-    var xAxes = [];
-    var yAxes = [];
-    var series = [];
-    var titles = [];
-    var count = 0;
-    var data = [];
-    var legends=[];
-    var colors=['#EE8262','#B5C334','#FCCE10','#E87C25','#B4EEB4',
-                        '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
-                        '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0',
-                        '#E87C25','#FCCE10','#C1232B','#B5C334','#72D871']
     var easingFuncs={{ json_cluster|safe }};
-    echarts.util.each(easingFuncs, function (easingFunc, name) {
-                grids.push({
-                    show: false,
-                    containLabel: false,
-                    borderWidth: 0,
-                    borderColor:'#fff'
-                });
-                xAxes.push({
-                    type: 'category',
-                    show: false,
-                    nameGap:'1',
-                    nameTextStyle:{
-                        color:'#fff'
-                    },
-                    gridIndex: count,
-                    axisLabel:{
-                        show:true,
-                        interval:0,
-                        textStyle: {
-                            color:'#fff',
-                            fontSize:14
-                        }
-                        //interval: '0'
-                    },
-                    axisTick:{
-                        show:false
-                    },
-                    
-                    data:easingFunc.xdata
-                //data:[]
-                });
-                yAxes.push({
-                    type: 'value',
-                    show: true,
-                    min: 0.001,
-                    axisLabel:{
-                        show:false
-                    },
-                    splitLine:{
-                        show:true,
-                        lineStyle:{
-                            width:0.2
-                        }
-                    },
-                    nameGap:'1',
-                    axisTick:{
-                        show:false
-                    },
-                    name: easingFunc.name,
-                    nameTextStyle:{
-                        color:'#fff',
-                        fontSize:14
-                    },
-                    gridIndex: count
-                });
-                series.push({
-                    name: easingFunc.name,
-                    type:  easingFunc.type,
-                    xAxisIndex: count,
-                    yAxisIndex: count,
-                data: easingFunc.ydata,
-                // data:[],
-                    showSymbol: false,
-                    lineStyle:{
-                        normal:{
-                            color:colors[count],
-                            width:2
-                        }
-                    },
-                    animationEasing: easingFunc.name,
-                    animationDuration: 1000
-                });
-                titles.push({
-                    show:false,
-                    textAlign: 'left',
-                    text: easingFunc.value,
-                    textStyle: {
-                        fontSize: 16,
-                        color:'yellow',
-                        fontWeight: 'normal'
-                    }
-                });
-                count++;
-            });
-            
-            //定位每个图形的位置
-            var rowNumber =  Math.floor(Math.sqrt(count));
-            echarts.util.each(grids, function (grid, idx) {
-                grid.left = ((idx % rowNumber) / rowNumber * 100+3) + '%';
-                grid.top = (Math.floor(idx / rowNumber) / rowNumber * 50+12) + '%';
-                grid.width = (1 / rowNumber * 92) + '%';
-                grid.height = (1 / rowNumber * 45) + '%';
-            
-                titles[idx].left = parseFloat(grid.left) +parseFloat(grid.width) / 2+ '%';
-                titles[idx].top = parseFloat(grid.top)-3.5 + '%';
-            });
-            
-            option1 = {
-                    backgroundColor:'#21242e',
-                    title: titles,
-                    grid: grids,
-                    xAxis: xAxes,
-                    yAxis: yAxes,
-                    series: series
-            };
-    myChart1.setOption(option1);
-    
-    var myChart2 = echarts.init(document.getElementById('echarts_ssjc_two'));
-    var easingFuncs={{ json_cluster|safe }};
-    option2 = {
+    option1 = {
         backgroundColor:'#21242e',
         title: {
             text: '聚类堆积折线图',
@@ -497,7 +392,7 @@
             }
         ]
     };
-    myChart2.setOption(option2);
+    myChart1.setOption(option1);
 
 </script>
 </body>
