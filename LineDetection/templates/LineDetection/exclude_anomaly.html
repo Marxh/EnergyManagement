@@ -176,6 +176,7 @@
                             <div class="nei">
                                 <p>未排查异常</p>
                                 <div class="ssjc_rub_table">
+                                    
                                     <table class="tj_table" border="0">
                                         <thead>
                                         <tr>
@@ -192,7 +193,12 @@
                                                     <td>{{ anomaly.id }}</td>
                                                     <td>{{ anomaly.anomaly_date }}</td>
                                                     <td>{{ anomaly.anomaly_type }}</td>
-                                                    <td> <input type="submit" class='btn btn-info'></input></td>
+                                                    <td>
+                                                        <form action="{% url 'LineDetection:fix_anomaly_action' facility_id anomaly.id character %}" method="post">
+                                                        {% csrf_token %}    
+                                                            <input type="submit" class='btn btn-info'></input>
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                             {% endfor %}
                                         {% else %}

@@ -16,6 +16,7 @@ urlpatterns = [
     path('calender/<int:facility_id>/<int:character>/',views.calender, name='calender'),
     path('setcluster/<int:facility_id>/<int:cluster_number>/<int:character>/',views.setcluster, name='setcluster'),
     path('login_action',views.login_action, name='login_action'),
+    path('fix_anomaly_action/<int:facility_id>/<int:anomaly_id>/<int:character>/',views.fix_anomaly_action, name='fix_anomaly_action'),
 #    path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
 #    path('<int:question_id>/vote/', views.vote, name='vote'),
 ]

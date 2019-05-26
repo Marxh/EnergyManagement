@@ -285,3 +285,8 @@ def exclude_anomaly(request, facility_id,character):
 
     return render(request, 'LineDetection/exclude_anomaly.html', {'json_cluster':json.dumps(json_cluster),'facility_id':facility_id,\
                                                            'cluster_info':cluster_info, 'anomaly_list':anomaly,'character':character})
+
+def fix_anomaly_action(request, facility_id,anomaly_id,character):
+    if request.method=="POST":
+        cluster_obj = Anomaly.objects.filter(id = anomaly_id).update(anomaly_solve = 1)
+    return HttpResponseRedirect('http://127.0.0.1:8000/admin/LineDetection/article/add/')
