@@ -1,11 +1,25 @@
 from django.contrib import admin
+from django import forms
 
 # Register your models here.
 
-from .models import Facility, Energy, Anomaly, season_goal, production_amount
+from .models import Tag, Article
 
-admin.site.register(Facility)
-admin.site.register(Energy)
-admin.site.register(Anomaly)
-admin.site.register(season_goal)
-admin.site.register(production_amount)
+
+class ArticleForm(forms.ModelForm):
+    article=forms.CharField( widget=forms.Textarea )
+    class Meta:
+        model = Article
+        fields=('article',)
+
+class ArticleAdmin(admin.ModelAdmin):
+    form = ArticleForm
+    date_hierarchy = 'pub_date'
+    empty_value_display = '-空-'
+    fieldsets = [
+        (None, {'fields': ('article_name', ('pub_date', 'article'),'tag_on')}),
+    ]
+    filter_horizontal = ('tag_on',)
+
+admin.site.register(Tag)
+admin.site.register(Article,ArticleAdmin)

@@ -281,7 +281,7 @@ def exclude_anomaly(request, facility_id,character):
     
     cluster_info = Cluster.objects.all()
     
-    anomaly = Anomaly.objects.filter(facility_id = facility_id, solved_comments = '')
+    anomaly = Anomaly.objects.filter(facility_id = facility_id, anomaly_solve = 0)
 
     return render(request, 'LineDetection/exclude_anomaly.html', {'json_cluster':json.dumps(json_cluster),'facility_id':facility_id,\
                                                            'cluster_info':cluster_info, 'anomaly_list':anomaly,'character':character})

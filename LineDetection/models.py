@@ -51,3 +51,21 @@ class Cluster(models.Model):
     #energy = models.FloatField(default = 0)
     #season = models.IntegerField(default=0, null=True)
     objects = DataFrameManager()
+
+class Tag(models.Model):
+    tag_text = models.CharField(max_length=200, default = '', null=True)
+    #article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    objects = DataFrameManager()
+
+    def __str__(self):
+        return self.tag_text
+
+class Article(models.Model):
+    article_name = models.CharField(max_length=200, default = '', null=True)
+    article = models.CharField(max_length=2000, default = '', null=True)
+    tag_on = models.ManyToManyField(Tag, blank=True)
+    pub_date = models.DateTimeField('article date')
+    objects = DataFrameManager()
+
+    def __str__(self):
+        return self.article_name
