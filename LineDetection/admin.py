@@ -19,7 +19,7 @@ class ArticleForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'style': 'height: 200px;width:1000px'}),}    
 
 class ArticleAdmin(admin.ModelAdmin):
-    search_fields = ['hname']
+    search_fields = ['article_name']
     list_filter=['pub_date','tag_on']
     list_per_page = 20
     actions_on_top=True

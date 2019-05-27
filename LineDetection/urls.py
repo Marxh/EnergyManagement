@@ -5,6 +5,7 @@ from . import views
 app_name = 'LineDetection'
 urlpatterns = [
     path(r'', views.login_index, name='login_index'),
+    path('login', views.login_index, name='login'),
     path('index/<int:character>/', views.index, name='index'),
     path('monitor_index/<int:character>/', views.monitor_index, name='monitor_index'),
     path('report/<int:character>/', views.report, name='report'),
