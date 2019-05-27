@@ -60,6 +60,10 @@ class Tag(models.Model):
     def __str__(self):
         return self.tag_text
 
+    class Meta: 
+        verbose_name='标签'
+        verbose_name_plural='标签'
+
 class Article(models.Model):
     article_name = models.CharField(max_length=200, default = '', null=True)
     article = models.CharField(max_length=2000, default = '', null=True)
@@ -69,3 +73,16 @@ class Article(models.Model):
 
     def __str__(self):
         return self.article_name
+    
+    class Meta: 
+        verbose_name='文章'
+        verbose_name_plural='文章'
+
+    def get_article_name(self):
+        return self.article_name
+    
+    def get_pub_date(self):
+        return self.pub_date
+    
+    get_article_name.short_description = r'文章名称'
+    get_pub_date.short_description = r'发布时间'
