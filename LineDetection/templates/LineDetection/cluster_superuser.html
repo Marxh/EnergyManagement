@@ -275,57 +275,27 @@
                     
 
                     <div class="col-lg-2 col-md-4">
-                        <div class="xyxgpj_rightbottom">
-                            <p class="yxpjxg_one">生产经验</p>
-                            <div class="yxpjxg_two">
-                                <a href=""><p>电泳设备异常值讨论</p></a>       
-                            </div>
-                            <p class="yxpjxg_four">文章内容：</p>
-                            <div class="yxpjxg_five">
-                                
-                                <span>已过去生产天数中电泳设备······</span><br>
-                                <span>本生产周期天数中能耗曲线如······</span>
-                            </div>
-                        </div>
-
-                        <div class="xyxgpj_rightbottom">
-                            <p class="yxpjxg_one">生产经验</p>
-                            <div class="yxpjxg_three">
-                                <a href=""><p>传输设备异常值讨论</p></a>       
-                            </div>
-                            <p class="yxpjxg_four">文章内容：</p>
-                            <div class="yxpjxg_five">
-                                
-                                <span>已过去生产天数中电泳设备······</span><br>
-                                <span>本生产周期天数中能耗曲线如······</span>
-                            </div>
-                        </div>
-
-                        <div class="xyxgpj_rightbottom">
-                            <p class="yxpjxg_one">生产经验</p>
-                            <div class="yxpjxg_three">
-                                <a href=""><p>传输设备异常值讨论</p></a>       
-                            </div>
-                            <p class="yxpjxg_four">文章内容：</p>
-                            <div class="yxpjxg_five">
-                                
-                                <span>已过去生产天数中传输设备······</span><br>
-                                <span>本生产周期天数中能耗曲线如······</span>
-                            </div>
-                        </div>
-
-                        <div class="xyxgpj_rightbottom">
-                            <p class="yxpjxg_one">生产经验</p>
-                            <div class="yxpjxg_three">
-                                <a href=""><p>通风设备异常值讨论</p></a>       
-                            </div>
-                            <p class="yxpjxg_four">文章内容：</p>
-                            <div class="yxpjxg_five">
-                                
-                                <span>已过去生产天数中通风设备······</span><br>
-                                <span>本生产周期天数中能耗曲线如······</span>
-                            </div>
-                        </div>
+                        {% for article in article_with_tag %}
+                            <a href="{% url 'LineDetection:cluster_superuser_view_article' article.article_id %}">
+                                <div class="xyxgpj_rightbottom">
+                                    <p class="yxpjxg_one">生产经验</p>
+                                    {% if article.article_id > 2 %}
+                                        <div class="yxpjxg_two">
+                                            <p>{{ article.article_name }}</p>
+                                        </div>
+                                    {% else %}
+                                        <div class="yxpjxg_three">
+                                            <p>{{ article.article_name }}</p>
+                                        </div>
+                                    {% endif %}
+                                    <p class="yxpjxg_four">文章内容：</p>
+                                    <div class="yxpjxg_five">
+                                        <span>{{ article.article }}</span><br>
+                                        <span>本生产周期天数中能耗曲线如······</span>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
                     </div>
                 </div>
 

@@ -12,6 +12,9 @@ class Facility(models.Model):
     energy_total = models.FloatField(default = 0)
     objects = DataFrameManager()
 
+    def __str__(self):
+        return self.facility_name
+
 class Energy(models.Model):
     facility = models.ForeignKey(Facility, on_delete=models.CASCADE)
     season = models.IntegerField(default=0)
@@ -54,7 +57,7 @@ class Cluster(models.Model):
 
 class Tag(models.Model):
     tag_text = models.CharField(max_length=200, default = '', null=True)
-    #article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    facility_id = models.ForeignKey(Facility, on_delete=models.CASCADE, null=True)
     objects = DataFrameManager()
 
     def __str__(self):

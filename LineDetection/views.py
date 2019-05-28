@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from itertools import chain
-from .models import Facility, Energy, Anomaly, Cluster, season_goal, production_amount
+from .models import Facility, Energy, Anomaly, Cluster, season_goal, production_amount, Tag, Article
 from .utils import *
 import pandas as pd
 import json
@@ -21,16 +21,17 @@ def login_index(request):
     return render(request, 'LineDetection/login.html')
 
 def login_action(request):
+    character_num = -1
     if request.method=="GET":
         account=request.GET.get('account',None)
         password=request.GET.get('password',None)
         character=request.GET.get('character',None)
-    if(character=='能耗分析人员'):
-        character_num = 0
-    elif(character=='普通用户'):
-        character_num = 1
-    else:
-        character_num = 2
+        if(character=='能耗分析人员'):
+            character_num = 0
+        elif(character=='普通用户'):
+            character_num = 1
+        else:
+            character_num = 2
     return HttpResponseRedirect(reverse('LineDetection:index', args=(character_num,)))
 
 def index(request,character):
@@ -194,6 +195,9 @@ def calender(request, facility_id,character):
     total_energy_group = total_energy.groupby('count_day').agg(aggregation)
     total_energy_group = total_energy_group.sort_values("energy",inplace=False)
     total_energy_group = total_energy_group.reset_index(drop=True)
+    
+    '''
+    # five top energy
     five_top_energy_json = [{
         'row_1_date':total_energy_group.iloc[0].tolist()[0],
         'row_1_energy':total_energy_group.iloc[0][1],
@@ -206,8 +210,11 @@ def calender(request, facility_id,character):
         'row_5_date':total_energy_group.iloc[4][0],
         'row_5_energy':total_energy_group.iloc[4][1]
     }]
+    '''
+    
     max_energy = total_energy_group.iloc[0].tolist()
     min_energy = total_energy_group.iloc[-1].tolist()
+    
     '''
     # get day of a date
     begin_date = datetime.date(total_energy['year'].iloc[0], total_energy['month'].iloc[0], total_energy['day'].iloc[0])
@@ -218,6 +225,7 @@ def calender(request, facility_id,character):
         energy_list[temp_day-1] = total_energy_group['energy'].iloc[i]
         temp_day = temp_day + 1
     '''
+    
     return render(request, 'LineDetection/calender.html', {'facility_id':facility_id,'character':character, 'five_top_energy':five_top_energy_json,\
         'max_energy':round(max_energy[1],2),'max_energy_date':max_energy[0],'min_energy':round(min_energy[1],2),'min_energy_date':min_energy[0]})
 
@@ -263,8 +271,17 @@ def cluster_superuser(request, facility_id,character):
         json_cluster.append(temp_cluster)
     
     cluster_info = Cluster.objects.all()
+
+    sql = open('SQL/article.sql', 'r')
+    sql_query = sql.read()
+    sql_query = sql_query.replace('\n',' ')
+    sql_query = sql_query.replace('{% facility_id %}',str(facility_id))
+    article_with_tag = Article.objects.raw(sql_query)
+    if(len(article_with_tag)>5):
+        article_with_tag = article_with_tag[:5]
     return render(request, 'LineDetection/cluster_superuser.html', {'json_cluster':json.dumps(json_cluster),'facility_id':facility_id,\
-                                                           'cluster_info':cluster_info,'score_list':score_list,'cluster_number':len(center),'character':character})
+                                                           'cluster_info':cluster_info,'score_list':score_list,'cluster_number':len(center),'character':character,\
+                                                               'article_with_tag':article_with_tag})
 
 def setcluster(request, facility_id, cluster_number,character):
     comments_list = []
@@ -277,6 +294,11 @@ def setcluster(request, facility_id, cluster_number,character):
             else:
                 cluster_obj = Cluster.objects.filter(cluster_id = i).update(anomaly_condition = 0, anomaly_comments = '')
     return HttpResponseRedirect(reverse('LineDetection:cluster', args=(facility_id,character,)))
+
+def cluster_superuser_view_article(request,article_id):
+    url_view_article = 'http://127.0.0.1:8000/admin/LineDetection/article/{% article_id %}/change/'
+    url_view_article = url_view_article.replace('{% article_id %}', str(article_id))
+    return HttpResponseRedirect(url_view_article)
 
 def exclude_anomaly(request, facility_id,character):
     #total_energy = Energy.objects.filter(facility_id = facility_id)
