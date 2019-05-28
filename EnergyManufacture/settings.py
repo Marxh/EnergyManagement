@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'EnergyManufacture.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'EnergyManufacture_0',   #数据库名字
+        'NAME': 'EnergyManufacture_1',   #数据库名字
         'HOST':'127.0.0.1',  #空的默认为localhost
         'USER':'root',    #mysql用户名
         'PASSWORD':'Pa22word',    #mysql密码

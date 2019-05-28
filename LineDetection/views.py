@@ -13,6 +13,7 @@ import numpy as np
 import calendar
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score, silhouette_samples
+import datetime
 
 # Create your views here.
 
@@ -180,7 +181,45 @@ def cluster(request, facility_id,character):
                                                            'cluster_info':cluster_info,'character':character})
 
 def calender(request, facility_id,character):
-    return render(request, 'LineDetection/calender.html', {'facility_id':facility_id,'character':character})
+    total_energy = pd.read_csv('total_energy.csv')
+    total_energy['date'] = pd.to_datetime(total_energy.energy_date,format="%Y/%m/%d")
+    total_energy['day'] = total_energy['date'].dt.day
+    total_energy['month'] = total_energy['date'].dt.month
+    total_energy['year'] = total_energy['date'].dt.year
+    total_energy['day'] = total_energy['day'].astype(str)
+    total_energy['month'] = total_energy['month'].astype(str)
+    total_energy['year'] = total_energy['year'].astype(str)
+    total_energy['count_day'] = total_energy['year']+"-"+total_energy['month']+"-"+total_energy['day']
+    aggregation = {'count_day':'first','energy':'sum'}
+    total_energy_group = total_energy.groupby('count_day').agg(aggregation)
+    total_energy_group = total_energy_group.sort_values("energy",inplace=False)
+    total_energy_group = total_energy_group.reset_index(drop=True)
+    five_top_energy_json = [{
+        'row_1_date':total_energy_group.iloc[0].tolist()[0],
+        'row_1_energy':total_energy_group.iloc[0][1],
+        'row_2_date':total_energy_group.iloc[1][0],
+        'row_2_energy':total_energy_group.iloc[1][1],
+        'row_3_date':total_energy_group.iloc[2][0],
+        'row_3_energy':total_energy_group.iloc[2][1],
+        'row_4_date':total_energy_group.iloc[3][0],
+        'row_4_energy':total_energy_group.iloc[3][1],
+        'row_5_date':total_energy_group.iloc[4][0],
+        'row_5_energy':total_energy_group.iloc[4][1]
+    }]
+    max_energy = total_energy_group.iloc[0].tolist()
+    min_energy = total_energy_group.iloc[-1].tolist()
+    '''
+    # get day of a date
+    begin_date = datetime.date(total_energy['year'].iloc[0], total_energy['month'].iloc[0], total_energy['day'].iloc[0])
+    begin_day = begin_date - datetime.date(begin_date.year - 1, 12, 31)
+    energy_list = [0] * 365
+    temp_day = begin_day.days
+    for i in range(len(total_energy_group)):
+        energy_list[temp_day-1] = total_energy_group['energy'].iloc[i]
+        temp_day = temp_day + 1
+    '''
+    return render(request, 'LineDetection/calender.html', {'facility_id':facility_id,'character':character, 'five_top_energy':five_top_energy_json,\
+        'max_energy':round(max_energy[1],2),'max_energy_date':max_energy[0],'min_energy':round(min_energy[1],2),'min_energy_date':min_energy[0]})
 
 def cluster_superuser(request, facility_id,character):
     total_energy = pd.read_csv('total_energy.csv')
