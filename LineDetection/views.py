@@ -277,8 +277,8 @@ def cluster_superuser(request, facility_id,character):
     sql_query = sql_query.replace('\n',' ')
     sql_query = sql_query.replace('{% facility_id %}',str(facility_id))
     article_with_tag = Article.objects.raw(sql_query)
-    if(len(article_with_tag)>5):
-        article_with_tag = article_with_tag[:5]
+    if(len(article_with_tag)>4):
+        article_with_tag = article_with_tag[:4]
     return render(request, 'LineDetection/cluster_superuser.html', {'json_cluster':json.dumps(json_cluster),'facility_id':facility_id,\
                                                            'cluster_info':cluster_info,'score_list':score_list,'cluster_number':len(center),'character':character,\
                                                                'article_with_tag':article_with_tag})
